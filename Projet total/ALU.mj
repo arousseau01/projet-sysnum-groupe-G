@@ -88,13 +88,41 @@ n_mux<n>(en,a:[n],b:[n]) = (o:[n]) where
     end if
 end where
 
+n_infeg_unsigned<n>(a:[n],b:[n])=(o:[2]) where
+    if n=0 then 
+        o=1.1
+    else 
+        o_low=n_infeg_unsigned<n-1>(a[..n-2],b[..n-2]);
+        o_signe_diff = n_mux<2>(a[n-1], 0.0, 0.1 );
+        o=n_mux<2>(a[n-1] xor b[n-1], o_signe_diff, o_low);
+    end if 
+end where
+
+(* Sur deux bits, le premier vaut 1 si a=b et 0 sinon, le deuxième 1 si a<=b et 0 sinon *)
+n_infeg_signed<n>(a:[n],b:[n]) = (o:[2]) where 
+    if n=0 then 
+        o=1.1
+    else 
+        o_low=n_infeg_unsigned<n-1>(a[..n-2],b[..n-2]);
+        o_signe_diff = n_mux<2>(a[n-1], 0.1, 0.0 );
+        o_signe_egal = n_mux<2>(a[n-1],
+                           o_low[0] . (o_low[0] + ((not o_low[0]) & (not o_low[1]))),
+                           o_low );
+        o=n_mux<2>( a[n-1] xor b[n-1], 
+               o_signe_diff,
+               o_signe_egal);
+    end if 
+end where
+
 main(a:[WORD_SIZE], b:[WORD_SIZE], op_code:[OP_SIZE], funct3:[FUNCT3], funct7:[FUNCT7]) = () where
+    comp=n_infeg_signed<WORD_SIZE>(a,b);
     b'=n_mux<WORD_SIZE>(funct7[0],n_not<WORD_SIZE>(b),b);
     (a_sum_b,c_out)=nadder<WORD_SIZE>(a,b',funct7);
     a_et_b=n_and<WORD_SIZE>(a,b');
     a_ou_b=n_or<WORD_SIZE>(a,b');
     a_xor_b=n_xor<WORD_SIZE>(a,b');
     a_nand_b=n_nand<WORD_SIZE>(a,b');
+    set_less_than=mux(a_sum_b[WORD_SIZE-1],1,0);
 end where
 
 (*sll<n>(a:[n]) = (o:[n]) where
