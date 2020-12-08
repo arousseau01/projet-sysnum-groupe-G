@@ -1,0 +1,48 @@
+const ADDR_SIZE = 16
+const INSTR_SIZE = 32
+
+fulladder(a, b, c_in) = (o, c_out) where
+    t = a ^ b;
+    o = c_in ^ t;
+    c_out = (a & b) or (t & c_in);
+end where
+
+nadder<n>(a:[n], b:[n], c_in) = (o:[n], c_out) where
+    if n = 0 then
+        o = [];
+        c_out = c_in;
+    else 
+        (o_low, c_low) = nadder<n-1>(a[1..], b[1..], c_in);
+        (o_high, c_out) = fulladder(a[0], b[0], c_low);
+        o = o_high . o_low;
+    end if
+end where
+
+zero<n>() = (z:[n]) where
+    if n = 0 then 
+        z = []
+    else 
+        z = 0 . zero<n-1>()
+    end if
+end where
+
+(* pc_out = pc_in + 4 *)
+incr_pc(pc_in:[ADDR_SIZE]) = (pc_out:[ADDR_SIZE]) where
+    c1 = pc_in[ADDR_SIZE-3];
+    (o, c) = nadder<ADDR_SIZE-3>(pc_in[..ADDR_SIZE-4], zero<ADDR_SIZE-3>(), c1);
+    pc_out = o . pc_in[ADDR_SIZE-3..];
+end where
+
+nreg<n>(inp:[n]) = (out:[n]) where
+    if n = 0 then 
+        out = []    
+    else
+        out = reg(inp[0]) . nreg<n-1>(inp[1..])
+    end if
+end where
+
+fetch() = (instr:[INSTR_SIZE]) where
+    pc_out = nreg<ADDR_SIZE>(pc_in);
+    pc_in = incr_pc(pc_out);
+    instr = rom<ADDR_SIZE, INSTR_SIZE>(pc_out)
+end where
