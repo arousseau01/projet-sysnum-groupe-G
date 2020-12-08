@@ -73,7 +73,7 @@
         addi  & ADD                  & 001    & 000    & 0      & \texttt{rd = rs1 + imm}       \\
         subi  & SUB                  & 001    & 000    & 1      & \texttt{rd = rs1 - imm}       \\
         ori   & OR                   & 001    & 100    & 0      & \texttt{rd = rs1 or imm}      \\
-        xori  & XOR                  & 001    & 110    & 0      & \texttt{rd = rs1 xor imm}     \\
+        xori  & XOR                  & 001    & 001    & 0      & \texttt{rd = rs1 xor imm}     \\
         andi  & AND                  & 001    & 101    & 0      & \texttt{rd = rs1 and imm}   \\
         nandi & NAND                 & 001    & 100    & 1      & \texttt{rd = rs1 nand imm}    \\
         nori  & NOR                  & 001    & 101    & 1      & \texttt{rd = rs1 nor imm}     \\
@@ -81,9 +81,10 @@
         slli  & Shift left logical   & 001    & 011    & 0      & \texttt{rd = rs1 << imm}      \\
         srli  & Shift right logical  & 001    & 010    & 0      & \texttt{rd = rs1 >> imm}      \\
         srai  & Shift right Arith    & 001    & 010    & 1      & \texttt{rd = rs1 >> imm}      \\
-        slti  & Set less than        & 001    & 001    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
+        slti  & Set less than        & 001    & 110    & 1      & \texttt{rd = (rs1 < rs2)?1:0} \\
+        seq   & Set equal            & 001    & 111    & 1      & \texttt{rd = (rs1 = rs2)?1:0} \\
         \hline
-        lw    & Load word            & 001    & 000    & 0      & \texttt{rd=M[rs1]}            \\
+        lw    & Load word            & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
         sw    & Store word           & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
         \hline
         beq   & Branch ==            & 110    & 100    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
@@ -94,8 +95,10 @@
         bgt   & Branch >             & 110    & 101    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
 
         \hline
-        jal  & Jump and link        & 101    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
-        jalr & Jump and link reg    & 111    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
+        jal  & Jump and link         & 111    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
+        jalr & Jump and link reg     & 101    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
+        jr   & Jump reg              & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
+        jmp  & Jump                  & 110    & 000    & 1      &\texttt{PC=imm}                \\
         \hline
     \end{tabular}
     
