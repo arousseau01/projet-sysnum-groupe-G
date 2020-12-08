@@ -1,0 +1,63 @@
+### Starting build.
+# Target: minijazz/main/mjc.ml.depends, tags: { extension:ml, file:minijazz/main/mjc.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/main/mjc.ml > minijazz/main/mjc.ml.depends # cached
+# Target: minijazz/main/cli_options.ml.depends, tags: { extension:ml, file:minijazz/main/cli_options.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/main/cli_options.ml > minijazz/main/cli_options.ml.depends # cached
+# Target: minijazz/main/cli_options.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/main/cli_options.cmo, file:minijazz/main/cli_options.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/main -I minijazz/global -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/main/cli_options.cmo minijazz/main/cli_options.ml # cached
+# Target: minijazz/global/errors.ml.depends, tags: { extension:ml, file:minijazz/global/errors.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/errors.ml > minijazz/global/errors.ml.depends # cached
+# Target: minijazz/global/location.ml.depends, tags: { extension:ml, file:minijazz/global/location.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/location.ml > minijazz/global/location.ml.depends # cached
+# Target: minijazz/global/location.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/location.cmo, file:minijazz/global/location.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/location.cmo minijazz/global/location.ml # cached
+# Target: minijazz/global/errors.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/errors.cmo, file:minijazz/global/errors.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/errors.cmo minijazz/global/errors.ml # cached
+# Target: minijazz/main/mj_compiler.ml.depends, tags: { extension:ml, file:minijazz/main/mj_compiler.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/main/mj_compiler.ml > minijazz/main/mj_compiler.ml.depends # cached
+# Target: minijazz/analysis/callgraph.ml.depends, tags: { extension:ml, file:minijazz/analysis/callgraph.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/analysis/callgraph.ml > minijazz/analysis/callgraph.ml.depends # cached
+# Target: minijazz/global/ast.ml.depends, tags: { extension:ml, file:minijazz/global/ast.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/ast.ml > minijazz/global/ast.ml.depends # cached
+# Target: minijazz/global/ident.ml.depends, tags: { extension:ml, file:minijazz/global/ident.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/ident.ml > minijazz/global/ident.ml.depends # cached
+# Target: minijazz/global/ident.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/ident.cmo, file:minijazz/global/ident.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/ident.cmo minijazz/global/ident.ml # cached
+# Target: minijazz/global/static.ml.depends, tags: { extension:ml, file:minijazz/global/static.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/static.ml > minijazz/global/static.ml.depends # cached
+# Target: minijazz/global/static.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/static.cmo, file:minijazz/global/static.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/static.cmo minijazz/global/static.ml # cached
+# Target: minijazz/global/ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/ast.cmo, file:minijazz/global/ast.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/ast.cmo minijazz/global/ast.ml # cached
+# Target: minijazz/global/mapfold.ml.depends, tags: { extension:ml, file:minijazz/global/mapfold.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/mapfold.ml > minijazz/global/mapfold.ml.depends # cached
+# Target: minijazz/global/misc.ml.depends, tags: { extension:ml, file:minijazz/global/misc.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/misc.ml > minijazz/global/misc.ml.depends # cached
+# Target: minijazz/global/misc.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/misc.cmo, file:minijazz/global/misc.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/misc.cmo minijazz/global/misc.ml # cached
+# Target: minijazz/global/mapfold.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/mapfold.cmo, file:minijazz/global/mapfold.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/mapfold.cmo minijazz/global/mapfold.ml # cached
+# Target: minijazz/analysis/normalize.ml.depends, tags: { extension:ml, file:minijazz/analysis/normalize.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/analysis/normalize.ml > minijazz/analysis/normalize.ml.depends # cached
+# Target: minijazz/analysis/normalize.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/analysis/normalize.cmo, file:minijazz/analysis/normalize.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/analysis -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -o minijazz/analysis/normalize.cmo minijazz/analysis/normalize.ml # cached
+# Target: minijazz/global/printer.ml.depends, tags: { extension:ml, file:minijazz/global/printer.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/printer.ml > minijazz/global/printer.ml.depends # cached
+# Target: minijazz/global/printer.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/printer.cmo, file:minijazz/global/printer.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/printer.cmo minijazz/global/printer.ml # cached
+# Target: minijazz/global/static_utils.ml.depends, tags: { extension:ml, file:minijazz/global/static_utils.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/global/static_utils.ml > minijazz/global/static_utils.ml.depends # cached
+# Target: minijazz/global/static_utils.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:minijazz/global/static_utils.cmo, file:minijazz/global/static_utils.ml, implem, ocaml, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlc.opt -c -I minijazz/global -I minijazz/main -I minijazz/parser -I minijazz/netlist -I minijazz/analysis -o minijazz/global/static_utils.cmo minijazz/global/static_utils.ml # cached
+# Target: minijazz/parser/lexer.mll, tags: { extension:mll, file:minijazz/parser/lexer.mll, lexer, ocaml, ocamllex, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamllex.opt -q minijazz/parser/lexer.mll # cached
+# Target: minijazz/parser/lexer.ml.depends, tags: { extension:ml, file:minijazz/parser/lexer.ml, ocaml, ocamldep, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamldep.opt -modules minijazz/parser/lexer.ml > minijazz/parser/lexer.ml.depends # cached
+# Target: minijazz/parser/parser.mly, tags: { extension:mly, file:minijazz/parser/parser.mly, infer, ocaml, ocamlyacc, parser, quiet, use_menhir }
+/Users/arthur/.opam/default/bin/ocamlyacc minijazz/parser/parser.mly
++ /Users/arthur/.opam/default/bin/ocamlyacc minijazz/parser/parser.mly
+File "minijazz/parser/parser.mly", line 1: syntax error
+(***********************************************************************)
+^
+Command exited with code 1.
+# Compilation unsuccessful.
