@@ -95,8 +95,8 @@
         bgt   & Branch >             & 110    & 101    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
 
         \hline
-        jal  & Jump and link         & 111    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
-        jalr & Jump and link reg     & 101    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
+        jal  & Jump and link         & 111    & 000    & 0      &\texttt{rd=PC+1; PC=imm}       \\
+        jalr & Jump and link reg     & 101    & 000    & 0      &\texttt{rd=PC+1; PC=rs1+imm}   \\
         jr   & Jump reg              & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
         jmp  & Jump                  & 110    & 000    & 1      &\texttt{PC=imm}                \\
         \hline
