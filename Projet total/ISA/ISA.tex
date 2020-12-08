@@ -42,6 +42,7 @@
         \hline
         Inst  & Nom                             & Opcode & funct3 & funct7 & Description                   \\
         \hline
+
         add   & ADD                             & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
         sub   & SUB                             & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
         or    & OR                              & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
@@ -73,6 +74,7 @@
         lw    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
         sw    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
         \hline
+
         beq   & Branch ==                       & 110    & 000    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
         bne   & Branch !=                       & 110    & 000    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
         ble   & Branch \(\leqslant\)            & 110    & 001    & 0      & \texttt{if(rs1 <= rs2) PC=imm}\\
