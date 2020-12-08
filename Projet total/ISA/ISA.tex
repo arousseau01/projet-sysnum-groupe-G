@@ -12,8 +12,52 @@
 \parskip1em\parindent0pt\let\ds\displaystyle
 
 \begin{document}
-    Instructions sur 32 bits, semblable à RISC-V.\\
+    8 registres : rax, rbx, rcx, rdx, rex, rfx, rhx, rz (registre 0).\\
+    registres 3 bits, stockent 32/64 bits.\\
+    Instructions sur 32 bits.\\
+    On réduit la taille de RISC-V:\begin{itemize}
+        \item opcode sur 3 bits
+        \item funct3 sur 3 bits ()
+        \item funct7 sur 1 bit 
+        \item rd,rs2,rs1 sur 3 bits (8 registres)
+    \end{itemize}
     Arithmétique signée seulement : ADD, SUB, XOR, OR, AND, NAND, Shift (left logical, right logical, right arith).\\
     Load, store 32b.\\
-    Branch, jump.\\
+    Branch, jump.
+
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        imm & funct7 & funct3 & rs2 & rs1 & rd & opcode \\
+        \hline
+    \end{tabular}
+
+    \begin{tabular}{|l|l|c|c|c|c|}
+        \hline
+        Inst & Nom                  & FMT & Opcode & funct3 & funct7 \\
+        \hline
+        add  & ADD                  & R   & 011    & 000    & 0      \\
+        sub  & SUB                  & R   & 011    & 000    & 1      \\
+        or   & OR                   & R   & 011    & 100    & 0      \\
+        xor  & XOR                  & R   & 011    & 110    & 0      \\
+        and  & AND                  & R   & 011    & 101    & 0      \\
+        nand & NAND                 & R   & 011    & 100    & 1      \\
+        nor  & NOR                  & R   & 011    & 101    & 1      \\
+        nxor & NXOR                 & R   & 011    & 110    & 1      \\
+        sll  & Shift left logical   & R   & 011    & 011    & 0      \\
+        srl  & Shift right logical  & R   & 011    & 010    & 0      \\
+        sra  & Shift right Arith    & R   & 011    & 010    & 1      \\
+        slt  & Set less than        & R   & 011    & 001    & 1      \\
+        \hline
+        lw   & Load word            & I   & 000    & 000    &        \\
+        sw   & Store word           & S   & 010    & 000    &        \\
+        \hline
+        beq  & Branch ==            & B   & 110    & 000    &        \\
+        bne  & Branch !=            & B   & 110    & 001    &        \\
+        blt  & Branch <             & B   & 110    & 100    &        \\
+        bge  & Branch \(\leqslant\) & B   & 110    & 101    &        \\
+        \hline
+        jal  & Jump and link        & J   & 101    &        &        \\
+        jalr & Jump and link reg    & I   & 111    & 000    &        \\
+        \hline
+    \end{tabular}
 \end{document}
