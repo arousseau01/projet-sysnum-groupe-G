@@ -37,9 +37,9 @@
     Instructions sur 32 bits.\\
     On réduit la taille de RISC-V:\begin{itemize}
         \item \texttt{opcode} sur 3 bits
-        \item \texttt{funct3} sur 3 bits ()
+        \item \texttt{funct3} sur 3 bits
         \item \texttt{funct7} sur 1 bit 
-        \item \texttt{rd},\texttt{rs2},\texttt{rs1} sur 3 bits (8 registres)
+        \item \texttt{rd}, \texttt{rs2}, \texttt{rs1} sur 3 bits (8 registres)
         \item \texttt{imm} sur 16 bits
     \end{itemize}
     Arithmétique signée seulement : ADD, SUB, XOR, OR, AND, NAND, Shift (left logical, right logical, right arith).\\
@@ -54,34 +54,48 @@
 
     \begin{tabular}{|l|l|c|c|c|l|}
         \hline
-        Inst & Nom                  & Opcode & funct3 & funct7 & Description                   \\
+        Inst  & Nom                  & Opcode & funct3 & funct7 & Description                   \\
         \hline
-        add  & ADD                  & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
-        sub  & SUB                  & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
-        or   & OR                   & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
-        xor  & XOR                  & 011    & 110    & 0      & \texttt{rd = rs1 xor rs2}     \\
-        and  & AND                  & 011    & 101    & 0      & \texttt{rd = (rs1 and rs2)}   \\
-        nand & NAND                 & 011    & 100    & 1      & \texttt{rd = rs1 nand rs2}    \\
-        nor  & NOR                  & 011    & 101    & 1      & \texttt{rd = rs1 nor rs2}     \\
-        nxor & NXOR                 & 011    & 110    & 1      & \texttt{rd = rs1 nxor rs2}    \\
-        sll  & Shift left logical   & 011    & 011    & 0      & \texttt{rd = rs1 << rs2}      \\
-        srl  & Shift right logical  & 011    & 010    & 0      & \texttt{rd = rs1 >> rs2}      \\
-        sra  & Shift right Arith    & 011    & 010    & 1      & \texttt{rd = rs1 >> rs2}      \\
-        slt  & Set less than        & 011    & 001    & 1      & \texttt{rd = (rs1 < rs2)?1:0} \\
+        add   & ADD                  & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
+        sub   & SUB                  & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
+        or    & OR                   & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
+        xor   & XOR                  & 011    & 110    & 0      & \texttt{rd = rs1 xor rs2}     \\
+        and   & AND                  & 011    & 101    & 0      & \texttt{rd = (rs1 and rs2)}   \\
+        nand  & NAND                 & 011    & 100    & 1      & \texttt{rd = rs1 nand rs2}    \\
+        nor   & NOR                  & 011    & 101    & 1      & \texttt{rd = rs1 nor rs2}     \\
+        nxor  & NXOR                 & 011    & 110    & 1      & \texttt{rd = rs1 nxor rs2}    \\
+        sll   & Shift left logical   & 011    & 011    & 0      & \texttt{rd = rs1 << rs2}      \\
+        srl   & Shift right logical  & 011    & 010    & 0      & \texttt{rd = rs1 >> rs2}      \\
+        sra   & Shift right Arith    & 011    & 010    & 1      & \texttt{rd = rs1 >> rs2}      \\
+        slt   & Set less than        & 011    & 001    & 1      & \texttt{rd = (rs1 < rs2)?1:0} \\
         \hline
-        lw   & Load word            & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
-        sw   & Store word           & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
+        addi  & ADD                  & 001    & 000    & 0      & \texttt{rd = rs1 + imm}       \\
+        subi  & SUB                  & 001    & 000    & 1      & \texttt{rd = rs1 - imm}       \\
+        ori   & OR                   & 001    & 100    & 0      & \texttt{rd = rs1 or imm}      \\
+        xori  & XOR                  & 001    & 110    & 0      & \texttt{rd = rs1 xor imm}     \\
+        andi  & AND                  & 001    & 101    & 0      & \texttt{rd = rs1 and imm}   \\
+        nandi & NAND                 & 001    & 100    & 1      & \texttt{rd = rs1 nand imm}    \\
+        nori  & NOR                  & 001    & 101    & 1      & \texttt{rd = rs1 nor imm}     \\
+        nxori & NXOR                 & 001    & 110    & 1      & \texttt{rd = rs1 nxor imm}    \\
+        slli  & Shift left logical   & 001    & 011    & 0      & \texttt{rd = rs1 << imm}      \\
+        srli  & Shift right logical  & 001    & 010    & 0      & \texttt{rd = rs1 >> imm}      \\
+        srai  & Shift right Arith    & 001    & 010    & 1      & \texttt{rd = rs1 >> imm}      \\
+        slti  & Set less than        & 001    & 001    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
         \hline
-        beq  & Branch ==            & 110    & 000    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
-        bne  & Branch !=            & 110    & 000    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
-        ble  & Branch \(\leqslant\) & 110    & 001    & 0      & \texttt{if(rs1 <= rs2) PC=imm}\\
-        blt  & Branch <             & 110    & 001    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
-        bge  & Branch \(\geqslant\) & 110    & 011    & 0      & \texttt{if(rs1 >= rs2) PC=imm}\\
-        bgt  & Branch >             & 110    & 011    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
+        lw    & Load word            & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
+        sw    & Store word           & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
+        \hline
+        beq   & Branch ==            & 110    & 000    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
+        bne   & Branch !=            & 110    & 000    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
+        ble   & Branch \(\leqslant\) & 110    & 001    & 0      & \texttt{if(rs1 <= rs2) PC=imm}\\
+        blt   & Branch <             & 110    & 001    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
+        bge   & Branch \(\geqslant\) & 110    & 011    & 0      & \texttt{if(rs1 >= rs2) PC=imm}\\
+        bgt   & Branch >             & 110    & 011    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
 
         \hline
         jal  & Jump and link        & 101    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
         jalr & Jump and link reg    & 111    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
         \hline
     \end{tabular}
+    
 \end{document}
