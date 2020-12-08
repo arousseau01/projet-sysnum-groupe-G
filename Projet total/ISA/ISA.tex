@@ -8,12 +8,23 @@
 \usepackage{esvect,esint}
 \usepackage{xcolor}
 \usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\usepackage{longtable}
 
+\title{ISA Groupe G}
+\author{Pierre-Alexandre Bazin, Mathis Bouverot \& Arthur Rousseau}
+\date{}
 \parskip1em\parindent0pt\let\ds\displaystyle
 
 \begin{document}
-    8 registres : rax, rbx, rcx, rdx, rex, rfx, rhx, rz (registre 0).\\
-    registres 16 bits.\\
+    \maketitle
+    \section{Mémoire}
+    La RAM et la ROM sont sur \(2^{16}\) bits, avec donc des adresses sur 16 bits. Les entiers manipulés seront toujours signés et sur 16 bits.
+    
+    \section{Registres}
+    Il y a 8 registres nommés rax, rbx, rcx, rdx, rex, rfx, rhx, rz (registre nul).\\
+    Ces registres sont sur 16 bits.\\
+    Codage des registres :
+
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         rz  & rax & rbx & rcx & rdx & rex & rfx & rhx \\
@@ -22,72 +33,83 @@
         \hline  
     \end{tabular}
 
-@@ -42,9 +30,7 @@
-        \item \texttt{rd}, \texttt{rs2}, \texttt{rs1} sur 3 bits (8 registres)
-        \item \texttt{imm} sur 16 bits
-    \end{itemize}
-    Arithmétique signée seulement
+    \section{Instructions}
+    Les instructions sont sur 32 bits. Leur schéma est le suivant :
 
     \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-@@ -54,52 +40,61 @@
-
-    \begin{tabular}{|l|l|c|c|c|l|}
-        \hline
-        Inst  & Nom                             & Opcode & funct3 & funct7 & Description                   \\
-        \hline
-        add   & ADD                             & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
-        sub   & SUB                             & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
-        or    & OR                              & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
-        nand  & NAND                            & 011    & 100    & 1      & \texttt{rd = rs1 nand rs2}    \\
-        xor   & XOR                             & 011    & 001    & 0      & \texttt{rd = rs1 xor rs2}     \\
-        nxor  & NXOR                            & 011    & 001    & 1      & \texttt{rd = rs1 nxor rs2}    \\
-        and   & AND                             & 011    & 101    & 0      & \texttt{rd = (rs1 and rs2)}   \\
-        nor   & NOR                             & 011    & 101    & 1      & \texttt{rd = rs1 nor rs2}     \\
-        sll   & Shift left logical              & 011    & 011    & 0      & \texttt{rd = rs1 << rs2}      \\
-        srl   & Shift right logical             & 011    & 010    & 0      & \texttt{rd = rs1 >> rs2}      \\
-        sra   & Shift right Arith               & 011    & 010    & 1      & \texttt{rd = rs1 >> rs2}      \\
-        seq   & Set equal                       & 011    & 111    & 1      & \texttt{rd = (rs1 = rs2)?1:0} \\
-        slt   & Set less than                   & 011    & 110    & 1      & \texttt{rd = (rs1 < rs2)?1:0} \\
-        \hline
-        addi  & ADD (immediate)                 & 001    & 000    & 0      & \texttt{rd = rs1 + imm}       \\
-        subi  & SUB (immediate)                 & 001    & 000    & 1      & \texttt{rd = rs1 - imm}       \\
-        ori   & OR (immediate)                  & 001    & 100    & 0      & \texttt{rd = rs1 or imm}      \\
-        nandi & NAND (immediate)                & 001    & 100    & 1      & \texttt{rd = rs1 nand imm}    \\
-        xori  & XOR (immediate)                 & 001    & 001    & 0      & \texttt{rd = rs1 xor imm}     \\
-        nxori & NXOR (immediate)                & 001    & 001    & 1      & \texttt{rd = rs1 nxor imm}    \\
-        andi  & AND (immediate)                 & 001    & 101    & 0      & \texttt{rd = rs1 and imm}     \\
-        nori  & NOR (immediate)                 & 001    & 101    & 1      & \texttt{rd = rs1 nor imm}     \\
-        slli  & Shift left logical (immediate)  & 001    & 011    & 0      & \texttt{rd = rs1 << imm}      \\
-        srli  & Shift right logical (immediate) & 001    & 010    & 0      & \texttt{rd = rs1 >> imm}      \\
-        srai  & Shift right Arith (immediate)   & 001    & 010    & 1      & \texttt{rd = rs1 >> imm}      \\
-        seqi  & Set equal (immediate)           & 001    & 111    & 1      & \texttt{rd = (rs1 = imm)?1:0} \\
-        slti  & Set less than (immediate)       & 001    & 110    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
-        \hline
-        lw    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
-        sw    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
-        \hline
-        beq   & Branch ==                       & 110    & 100    & 1      & \texttt{if(rs1 == rs2) PC=imm}\\
-        bne   & Branch !=                       & 110    & 101    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
-        ble   & Branch \(\leqslant\)            & 110    & 110    & 1      & \texttt{if(rs1 <= rs2) PC=imm}\\
-        blt   & Branch <                        & 110    & 010    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
-        bge   & Branch \(\geqslant\)            & 110    & 011    & 1      & \texttt{if(rs1 >= rs2) PC=imm}\\
-        bgt   & Branch >                        & 110    & 111    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
-        \hline
-        jal  & Jump and link                    & 111    & 000    & 0      &\texttt{rd=PC+1; PC=imm}       \\
-        jalr & Jump and link reg                & 101    & 000    & 0      &\texttt{rd=PC+1; PC=rs1+imm}   \\
-        jr   & Jump reg                         & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
-        jmp  & Jump                             & 110    & 001    & 1      &\texttt{PC=imm}                \\
+        \texttt{imm} & \texttt{funct7} & \texttt{funct3} & \texttt{rs2} & \texttt{rs1} & \texttt{rd} & \texttt{opcode} \\
         \hline
     \end{tabular}
 
-    Sucre syntaxique:\\
-    \begin{tabular}{|l|l|l|}
+    avec \begin{itemize}
+        \item \texttt{opcode} sur 3 bits
+        \item \texttt{funct3} sur 3 bits
+        \item \texttt{funct7} sur 1 bit 
+        \item \texttt{rd}, \texttt{rs2}, \texttt{rs1} sur 3 bits (8 registres)
+        \item \texttt{imm} sur 16 bits
+    \end{itemize}
+
+    Instructions possibles :
+
+    \begin{longtable}{|l|l|c|c|c|l|}
         \hline
-        Inst & Nom             & Description       \\
+        Inst           & Nom                             & Opcode & funct3 & funct7 & Description                   \\
         \hline
-        mov  & MOV             & \texttt{rd=rs1+0} \\
-        movi & MOV (immediate) & \texttt{rd=imm+0} \\
+
+        \texttt{add}   & ADD                             & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
+        \texttt{sub}   & SUB                             & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
+        \texttt{or}    & OR                              & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
+        \texttt{nand}  & NAND                            & 011    & 100    & 1      & \texttt{rd = rs1 nand rs2}    \\
+        \texttt{xor}   & XOR                             & 011    & 001    & 0      & \texttt{rd = rs1 xor rs2}     \\
+        \texttt{nxor}  & NXOR                            & 011    & 001    & 1      & \texttt{rd = rs1 nxor rs2}    \\
+        \texttt{and}   & AND                             & 011    & 101    & 0      & \texttt{rd = (rs1 and rs2)}   \\
+        \texttt{nor}   & NOR                             & 011    & 101    & 1      & \texttt{rd = rs1 nor rs2}     \\
+        \texttt{sll}   & Shift left logical              & 011    & 011    & 0      & \texttt{rd = rs1 << rs2}      \\
+        \texttt{srl}   & Shift right logical             & 011    & 010    & 0      & \texttt{rd = rs1 >> rs2}      \\
+        \texttt{sra}   & Shift right Arith               & 011    & 010    & 1      & \texttt{rd = rs1 >> rs2}      \\
+        \texttt{seq}   & Set equal                       & 011    & 111    & 1      & \texttt{rd = (rs1 = rs2)?1:0} \\
+        \texttt{slt}   & Set less than                   & 011    & 110    & 1      & \texttt{rd = (rs1 < rs2)?1:0} \\
         \hline
-    \end{tabular}
+        \texttt{addi}  & ADD (immediate)                 & 001    & 000    & 0      & \texttt{rd = rs1 + imm}       \\
+        \texttt{subi}  & SUB (immediate)                 & 001    & 000    & 1      & \texttt{rd = rs1 - imm}       \\
+        \texttt{ori}   & OR (immediate)                  & 001    & 100    & 0      & \texttt{rd = rs1 or imm}      \\
+        \texttt{nandi} & NAND (immediate)                & 001    & 100    & 1      & \texttt{rd = rs1 nand imm}    \\
+        \texttt{xori}  & XOR (immediate)                 & 001    & 001    & 0      & \texttt{rd = rs1 xor imm}     \\
+        \texttt{nxori} & NXOR (immediate)                & 001    & 001    & 1      & \texttt{rd = rs1 nxor imm}    \\
+        \texttt{andi}  & AND (immediate)                 & 001    & 101    & 0      & \texttt{rd = rs1 and imm}     \\
+        \texttt{nori}  & NOR (immediate)                 & 001    & 101    & 1      & \texttt{rd = rs1 nor imm}     \\
+        \texttt{slli}  & Shift left logical (immediate)  & 001    & 011    & 0      & \texttt{rd = rs1 << imm}      \\
+        \texttt{srli}  & Shift right logical (immediate) & 001    & 010    & 0      & \texttt{rd = rs1 >> imm}      \\
+        \texttt{srai}  & Shift right Arith (immediate)   & 001    & 010    & 1      & \texttt{rd = rs1 >> imm}      \\
+        \texttt{seqi}  & Set equal (immediate)           & 001    & 111    & 1      & \texttt{rd = (rs1 = imm)?1:0} \\
+        \texttt{slti}  & Set less than (immediate)       & 001    & 110    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
+        \hline
+        \texttt{lw}    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
+        \texttt{sw}    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
+        \hline
+        \texttt{beq}   & Branch ==                       & 110    & 100    & 1      & \texttt{if(rs1 == rs2) PC=imm}\\
+        \texttt{bne}   & Branch !=                       & 110    & 101    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
+        \texttt{ble}   & Branch \(\leqslant\)            & 110    & 110    & 1      & \texttt{if(rs1 <= rs2) PC=imm}\\
+        \texttt{blt}   & Branch <                        & 110    & 010    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
+        \texttt{bge}   & Branch \(\geqslant\)            & 110    & 011    & 1      & \texttt{if(rs1 >= rs2) PC=imm}\\
+        \texttt{bgt}   & Branch >                        & 110    & 111    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
+        \hline
+        \texttt{jal}   & Jump and link                   & 111    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
+        \texttt{jalr}  & Jump and link reg               & 101    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
+        \texttt{jr}    & Jump reg                        & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
+        \texttt{jmp}   & Jump                            & 110    & 001    & 1      &\texttt{PC=imm}                \\
+        \hline
+    \end{longtable}
+
+    On ajoute du sucre syntaxique:
+
+    \begin{longtable}{|l|l|l|}
+        \hline
+        Inst          & Nom             & Description       \\
+        \hline
+        \texttt{mov}  & MOV             & \texttt{rd=rs1+0} \\
+        \texttt{movi} & MOV (immediate) & \texttt{rd=imm+0} \\
+        \hline
+    \end{longtable}
 \end{document}
