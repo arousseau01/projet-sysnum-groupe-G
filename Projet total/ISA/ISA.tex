@@ -23,8 +23,15 @@
     \end{itemize}
     Arithmétique signée seulement : ADD, SUB, XOR, OR, AND, NAND, Shift (left logical, right logical, right arith).\\
     Load, store 32b.\\
-    Branch, jump.\\
+    Branch, jump.
+
     \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        imm & funct7 & funct3 & rs2 & rs1 & rd & opcode \\
+        \hline
+    \end{tabular}
+
+    \begin{tabular}{|l|l|c|c|c|c|}
         \hline
         Inst & Nom                  & FMT & Opcode & funct3 & funct7 \\
         \hline

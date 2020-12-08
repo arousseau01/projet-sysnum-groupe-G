@@ -1,15 +1,57 @@
-const WORD_SIZE = 64
+const WORD_SIZE = 32
 const INSTR_SIZE = 32
-const OP_SIZE = 5
-const REG_SIZE = 5
+const OP_SIZE = 3
+const REG_SIZE = 3
 const STATUS_SIZE = 5
+const FUNCT3 = 3
+const FUNCT7 = 1
 
-or_for_n<n>(a:[n], b:[n]) = (o:[n]) where
+n_xor<n>(a:[n], b:[n]) = (o:[n]) where
     if n=0 then
         o=[]
     else
-        q=or_for_n<n-1>(a[1..],b[1..]);
-        t=a[0] or b[0];
+        q=n_xor<n-1>(a[1..],b[1..]);
+        t=a[0] ^ b[0];
+        o = t.q
+    end if
+end where
+
+n_or<n>(a:[n], b:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_or<n-1>(a[1..],b[1..]);
+        t=a[0] + b[0];
+        o = t.q
+    end if
+end where
+
+n_and<n>(a:[n], b:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_and<n-1>(a[1..],b[1..]);
+        t=a[0] & b[0];
+        o = t.q
+    end if
+end where
+
+n_nand<n>(a:[n], b:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_nand<n-1>(a[1..],b[1..]);
+        t=(a[0]) nand (b[0]);
+        o = t.q
+    end if
+end where
+
+n_not<n>(a:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_not<n-1>(a[1..]);
+        t=not a[0];
         o = t.q
     end if
 end where
@@ -31,5 +73,65 @@ nadder<n>(a:[n], b:[n], c_in) = (o:[n], c_out) where
     end if
 end where
 
-main(opcode:[OP_SIZE],r1:[REG_SIZE],r2:[REG_SIZE],status:[STATUS_SIZE]) = 
+nsub<n>(a:[n], b:[n], c_in) = (o:[n], c_out) where
+    not_b = n_not<n>(b);
+    (o,c_out) = nadder<n>(a, not_b, 1);
+end where
 
+n_mux<n>(en,a:[n],b:[n]) = (o:[n]) where
+    if n=0 then 
+        o=[]
+    else 
+        o_low=mux(en,a[0],b[0]);
+        o_high=n_mux<n-1>(en,a[1..],b[1..]);
+        o=o_low.o_high
+    end if
+end where
+
+n_infeg_unsigned<n>(a:[n],b:[n])=(o:[2]) where
+    if n=0 then 
+        o=1.1
+    else 
+        o_low=n_infeg_unsigned<n-1>(a[..n-2],b[..n-2]);
+        o_signe_diff = n_mux<2>(a[n-1], 0.0, 0.1 );
+        o=n_mux<2>(a[n-1] xor b[n-1], o_signe_diff, o_low);
+    end if 
+end where
+
+(* Sur deux bits, le premier vaut 1 si a=b et 0 sinon, le deuxième 1 si a<=b et 0 sinon *)
+n_infeg_signed<n>(a:[n],b:[n]) = (o:[2]) where 
+    if n=0 then 
+        o=1.1
+    else 
+        o_low=n_infeg_unsigned<n-1>(a[..n-2],b[..n-2]);
+        o_signe_diff = n_mux<2>(a[n-1], 0.1, 0.0 );
+        o_signe_egal = n_mux<2>(a[n-1],
+                           o_low[0] . (o_low[0] + ((not o_low[0]) & (not o_low[1]))),
+                           o_low );
+        o=n_mux<2>( a[n-1] xor b[n-1], 
+               o_signe_diff,
+               o_signe_egal);
+    end if 
+end where
+
+main(a:[WORD_SIZE], b:[WORD_SIZE], op_code:[OP_SIZE], funct3:[FUNCT3], funct7:[FUNCT7]) = () where
+    comp=n_infeg_signed<WORD_SIZE>(a,b);
+    b'=n_mux<WORD_SIZE>(funct7[0],n_not<WORD_SIZE>(b),b);
+    (a_sum_b,c_out)=nadder<WORD_SIZE>(a,b',funct7);
+    a_et_b=n_and<WORD_SIZE>(a,b');
+    a_ou_b=n_or<WORD_SIZE>(a,b');
+    a_xor_b=n_xor<WORD_SIZE>(a,b');
+    a_nand_b=n_nand<WORD_SIZE>(a,b');
+    set_less_than=comp[1];
+end where
+
+(*sll<n>(a:[n]) = (o:[n]) where
+    if n=0 then 
+        o=[];
+    else 
+    if n=1 then 
+        o=[0];
+    else
+        o_high=a[1];
+        o_low=sll<n>(a:[n])
+end where*)
