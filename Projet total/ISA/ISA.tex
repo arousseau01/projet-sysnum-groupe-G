@@ -86,12 +86,12 @@
         lw    & Load word            & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
         sw    & Store word           & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
         \hline
-        beq   & Branch ==            & 110    & 000    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
-        bne   & Branch !=            & 110    & 000    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
-        ble   & Branch \(\leqslant\) & 110    & 001    & 0      & \texttt{if(rs1 <= rs2) PC=imm}\\
-        blt   & Branch <             & 110    & 001    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
-        bge   & Branch \(\geqslant\) & 110    & 011    & 0      & \texttt{if(rs1 >= rs2) PC=imm}\\
-        bgt   & Branch >             & 110    & 011    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
+        beq   & Branch ==            & 110    & 100    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
+        bne   & Branch !=            & 110    & 100    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
+        ble   & Branch \(\leqslant\) & 110    & 101    & 0      & \texttt{if(rs1 <= rs2) PC=imm}\\
+        blt   & Branch <             & 110    & 001    & 0      & \texttt{if(rs1 < rs2) PC=imm} \\
+        bge   & Branch \(\geqslant\) & 110    & 001    & 1      & \texttt{if(rs1 >= rs2) PC=imm}\\
+        bgt   & Branch >             & 110    & 101    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
 
         \hline
         jal  & Jump and link        & 101    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
