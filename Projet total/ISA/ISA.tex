@@ -83,7 +83,7 @@
         srai  & Shift right Arith    & 001    & 010    & 1      & \texttt{rd = rs1 >> imm}      \\
         slti  & Set less than        & 001    & 001    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
         \hline
-        lw    & Load word            & 111    & 000    & 0      & \texttt{rd=M[rs1]}            \\
+        lw    & Load word            & 001    & 000    & 0      & \texttt{rd=M[rs1]}            \\
         sw    & Store word           & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
         \hline
         beq   & Branch ==            & 110    & 100    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
