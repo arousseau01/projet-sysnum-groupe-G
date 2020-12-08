@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.12.8)  8 DEC 2020 22:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.12.8)  8 DEC 2020 23:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -263,20 +263,20 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 14.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 20.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 20.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 20.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-2.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+6.
 
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 24.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 24.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 24.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-2.
+6.
 
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -286,7 +286,7 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 Here is how much of TeX's memory you used:
  2495 strings out of 483183
  32690 string characters out of 5966292
- 263080 words of memory out of 5000000
+ 262080 words of memory out of 5000000
  17486 multiletter control sequences out of 15000+600000
  576072 words of font info for 64 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -300,7 +300,7 @@ fonts/enc/dvips/lm/lm-mathit.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10
 /usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/
 public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/sh
 are/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on minias.pdf (2 pages, 134914 bytes).
+Output written on minias.pdf (2 pages, 136086 bytes).
 PDF statistics:
  49 PDF objects out of 1000 (max. 8388607)
  36 compressed objects within 1 object stream
