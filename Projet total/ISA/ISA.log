@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.3.24)  8 DEC 2020 16:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.3.24)  8 DEC 2020 17:06
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -530,13 +530,13 @@ LaTeX Font Info:    Try loading font information for U+esint on input line 17.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/esint/uesint.fd
 File: uesint.fd 
 )
-LaTeX Font Info:    Try loading font information for OMS+lmr on input line 39.
+LaTeX Font Info:    Try loading font information for OMS+lmr on input line 27.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
 File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 39.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 39.
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 27.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 27.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [1
@@ -545,13 +545,13 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 Here is how much of TeX's memory you used:
  20380 strings out of 494490
  472378 string characters out of 6174655
- 608465 words of memory out of 5000000
+ 609465 words of memory out of 5000000
  23702 multiletter control sequences out of 15000+600000
  20423 words of font info for 39 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  55i,7n,48p,523b,156s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.pdf" (2 pages, 72397 bytes).
+Output written on "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.pdf" (2 pages, 73297 bytes).
 PDF statistics:
  32 PDF objects out of 1000 (max. 8388607)
  23 compressed objects within 1 object stream
