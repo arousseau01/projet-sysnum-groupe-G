@@ -200,11 +200,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
-INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
-INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
-INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
-INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmsy10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/ot1lmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/ot1lmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/rm-lmr10.tfm
@@ -215,6 +210,9 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omllmm.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmmi10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmmi7.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmmi5.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmsy10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmsy7.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmsy5.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omxlmex.fd
@@ -240,11 +238,17 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/esint/uesint.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/esint/esint10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/esint/esint10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/esint/esint10.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
 OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.pdf
 INPUT /usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.aux
-INPUT /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmr10.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
