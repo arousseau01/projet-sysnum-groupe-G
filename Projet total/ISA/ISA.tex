@@ -22,11 +22,7 @@
         \hline  
     \end{tabular}
 
-    Instructions sur 32 bits.\\
-    On réduit la taille de RISC-V:\begin{itemize}
-        \item \texttt{opcode} sur 3 bits
-        \item \texttt{funct3} sur 3 bits
-        \item \texttt{funct7} sur 1 bit 
+@@ -42,9 +30,7 @@
         \item \texttt{rd}, \texttt{rs2}, \texttt{rs1} sur 3 bits (8 registres)
         \item \texttt{imm} sur 16 bits
     \end{itemize}
@@ -34,21 +30,18 @@
 
     \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-        \texttt{imm} & \texttt{funct7} & \texttt{funct3} & \texttt{rs2} & \texttt{rs1} & \texttt{rd} & \texttt{opcode} \\
-        \hline
-    \end{tabular}
+@@ -54,52 +40,61 @@
 
     \begin{tabular}{|l|l|c|c|c|l|}
         \hline
         Inst  & Nom                             & Opcode & funct3 & funct7 & Description                   \\
         \hline
-
         add   & ADD                             & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
         sub   & SUB                             & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
         or    & OR                              & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
         nand  & NAND                            & 011    & 100    & 1      & \texttt{rd = rs1 nand rs2}    \\
         xor   & XOR                             & 011    & 001    & 0      & \texttt{rd = rs1 xor rs2}     \\
-        nxor  & NXOR                            & 011    & 110    & 1      & \texttt{rd = rs1 nxor rs2}    \\
+        nxor  & NXOR                            & 011    & 001    & 1      & \texttt{rd = rs1 nxor rs2}    \\
         and   & AND                             & 011    & 101    & 0      & \texttt{rd = (rs1 and rs2)}   \\
         nor   & NOR                             & 011    & 101    & 1      & \texttt{rd = rs1 nor rs2}     \\
         sll   & Shift left logical              & 011    & 011    & 0      & \texttt{rd = rs1 << rs2}      \\
@@ -62,7 +55,7 @@
         ori   & OR (immediate)                  & 001    & 100    & 0      & \texttt{rd = rs1 or imm}      \\
         nandi & NAND (immediate)                & 001    & 100    & 1      & \texttt{rd = rs1 nand imm}    \\
         xori  & XOR (immediate)                 & 001    & 001    & 0      & \texttt{rd = rs1 xor imm}     \\
-        nxori & NXOR (immediate)                & 001    & 110    & 1      & \texttt{rd = rs1 nxor imm}    \\
+        nxori & NXOR (immediate)                & 001    & 001    & 1      & \texttt{rd = rs1 nxor imm}    \\
         andi  & AND (immediate)                 & 001    & 101    & 0      & \texttt{rd = rs1 and imm}     \\
         nori  & NOR (immediate)                 & 001    & 101    & 1      & \texttt{rd = rs1 nor imm}     \\
         slli  & Shift left logical (immediate)  & 001    & 011    & 0      & \texttt{rd = rs1 << imm}      \\
@@ -74,17 +67,17 @@
         lw    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
         sw    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
         \hline
-
-        beq   & Branch ==                       & 110    & 000    & 0      & \texttt{if(rs1 == rs2) PC=imm}\\
-        bne   & Branch !=                       & 110    & 000    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
-        ble   & Branch \(\leqslant\)            & 110    & 001    & 0      & \texttt{if(rs1 <= rs2) PC=imm}\\
-        blt   & Branch <                        & 110    & 001    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
-        bge   & Branch \(\geqslant\)            & 110    & 011    & 0      & \texttt{if(rs1 >= rs2) PC=imm}\\
-        bgt   & Branch >                        & 110    & 011    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
-
+        beq   & Branch ==                       & 110    & 100    & 1      & \texttt{if(rs1 == rs2) PC=imm}\\
+        bne   & Branch !=                       & 110    & 101    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
+        ble   & Branch \(\leqslant\)            & 110    & 110    & 1      & \texttt{if(rs1 <= rs2) PC=imm}\\
+        blt   & Branch <                        & 110    & 010    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
+        bge   & Branch \(\geqslant\)            & 110    & 011    & 1      & \texttt{if(rs1 >= rs2) PC=imm}\\
+        bgt   & Branch >                        & 110    & 111    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
         \hline
-        jal  & Jump and link                    & 101    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
-        jalr & Jump and link reg                & 111    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
+        jal  & Jump and link                    & 111    & 000    & 0      &\texttt{rd=PC+1; PC=imm}       \\
+        jalr & Jump and link reg                & 101    & 000    & 0      &\texttt{rd=PC+1; PC=rs1+imm}   \\
+        jr   & Jump reg                         & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
+        jmp  & Jump                             & 110    & 001    & 1      &\texttt{PC=imm}                \\
         \hline
     \end{tabular}
 
