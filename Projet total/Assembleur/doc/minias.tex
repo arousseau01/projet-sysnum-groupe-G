@@ -16,6 +16,10 @@
     Pour compiler minias : \texttt{make}.\\
     Pour assembler un fichier file.ms : \texttt{./minias file.ms}.
 
+    \section{Syntaxe}
+    Les commentaires commencent par ; et s'étendent jusqu'à la fin de la ligne.
+    Un fichier est une suite d'instructions et de labels.
+    
     \section{Registres}
     Il y a 7 registres minias nommés rax, rbx, rcx, rdx, rex, rfx, rhx.\\
     Ces registres sont sur 16 bits.\\
@@ -58,6 +62,7 @@
             \item \texttt{dest} : registre ou mémoire
             \item \texttt{source} : registre, mémoire ou immediate
         \end{itemize}
+        Si \texttt{dest} ou \texttt{source} est un emplacement mémoire, le deuxième doit etre un registre.
     \end{itemize}
 
     \section{Labels}
