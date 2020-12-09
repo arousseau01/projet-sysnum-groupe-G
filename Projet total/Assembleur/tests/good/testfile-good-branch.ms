@@ -1,3 +1,4 @@
+    .section text
     beq %rax %rbx L0
     bne %rax %rbx L0
 L0:

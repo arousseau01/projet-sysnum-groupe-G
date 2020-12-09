@@ -16,6 +16,7 @@
     | REG of reg
     (* (%rax) *)
     | IND_REG of reg
+    | DOT_SECTION | DOT_SPACE | DATA | TEXT
     | EOF
 
   (* instructions lw, sw, addi, subi, etc. 
@@ -58,11 +59,19 @@
     ("rfx", RFX);
     ("rgx", RGX)] 
 
+  let keyword_table = Hashtbl.create 4
+  let _ = List.iter
+    (fun (name, k) -> Hashtbl.add keyword_table name k)
+    [(".section", DOT_SECTION);
+    (".space", DOT_SPACE);
+    ("data", DATA);
+    ("text", TEXT)]
+
   let parse_int str =
     (* TODO : check it is 16 bits *)
     int_of_string str
 
-# 66 "lexer.ml"
+# 75 "lexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base =
    "\000\000\246\255\247\255\001\000\077\000\160\000\237\000\252\255\
@@ -299,58 +308,61 @@ let rec token lexbuf =
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 71 "lexer.mll"
+# 80 "lexer.mll"
                ( token lexbuf )
-# 305 "lexer.ml"
+# 314 "lexer.ml"
 
   | 1 ->
-# 72 "lexer.mll"
+# 81 "lexer.mll"
          ( new_line lexbuf; token lexbuf )
-# 310 "lexer.ml"
+# 319 "lexer.ml"
 
   | 2 ->
-# 73 "lexer.mll"
+# 82 "lexer.mll"
         ( comment lexbuf )
-# 315 "lexer.ml"
+# 324 "lexer.ml"
 
   | 3 ->
-# 74 "lexer.mll"
+# 83 "lexer.mll"
         ( COLON )
-# 320 "lexer.ml"
+# 329 "lexer.ml"
 
   | 4 ->
 let
-# 75 "lexer.mll"
+# 84 "lexer.mll"
            n
-# 326 "lexer.ml"
+# 335 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 75 "lexer.mll"
+# 84 "lexer.mll"
              ( INT (parse_int n) )
-# 330 "lexer.ml"
+# 339 "lexer.ml"
 
   | 5 ->
 let
-# 76 "lexer.mll"
+# 85 "lexer.mll"
              i
-# 336 "lexer.ml"
+# 345 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 76 "lexer.mll"
+# 85 "lexer.mll"
                (
     try 
       let instr = Hashtbl.find instr_table i in
       INSTR instr
-    with Not_found ->
-      IDENT i
+    with Not_found -> begin
+      try Hashtbl.find keyword_table i 
+      with Not_found ->
+        IDENT i
+    end
   )
-# 346 "lexer.ml"
+# 358 "lexer.ml"
 
   | 6 ->
 let
-# 83 "lexer.mll"
+# 95 "lexer.mll"
                  i
-# 352 "lexer.ml"
+# 364 "lexer.ml"
 = Lexing.sub_lexeme lexbuf (lexbuf.Lexing.lex_start_pos + 1) lexbuf.Lexing.lex_curr_pos in
-# 83 "lexer.mll"
+# 95 "lexer.mll"
                     (
     try 
       let reg = Hashtbl.find reg_table i in
@@ -358,15 +370,15 @@ let
     with Not_found ->
       error ("unknown register name " ^ i)
   )
-# 362 "lexer.ml"
+# 374 "lexer.ml"
 
   | 7 ->
 let
-# 90 "lexer.mll"
+# 102 "lexer.mll"
                   i
-# 368 "lexer.ml"
+# 380 "lexer.ml"
 = Lexing.sub_lexeme lexbuf (lexbuf.Lexing.lex_start_pos + 2) (lexbuf.Lexing.lex_curr_pos + -1) in
-# 90 "lexer.mll"
+# 102 "lexer.mll"
                         (
     try 
       let reg = Hashtbl.find reg_table i in
@@ -374,26 +386,26 @@ let
     with Not_found ->
       error ("unknown register name " ^ i)
   )
-# 378 "lexer.ml"
+# 390 "lexer.ml"
 
   | 8 ->
 let
-# 97 "lexer.mll"
+# 109 "lexer.mll"
          c
-# 384 "lexer.ml"
+# 396 "lexer.ml"
 = Lexing.sub_lexeme_char lexbuf lexbuf.Lexing.lex_start_pos in
-# 97 "lexer.mll"
+# 109 "lexer.mll"
            ( 
     error (Printf.sprintf 
       "unexpected character %s" 
       (String.make 1 c))
   )
-# 392 "lexer.ml"
+# 404 "lexer.ml"
 
   | 9 ->
-# 102 "lexer.mll"
+# 114 "lexer.mll"
         ( EOF )
-# 397 "lexer.ml"
+# 409 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
@@ -403,19 +415,19 @@ and comment lexbuf =
 and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 105 "lexer.mll"
+# 117 "lexer.mll"
          ( new_line lexbuf; token lexbuf )
-# 409 "lexer.ml"
+# 421 "lexer.ml"
 
   | 1 ->
-# 106 "lexer.mll"
+# 118 "lexer.mll"
         ( error "unexpected eof in comment" )
-# 414 "lexer.ml"
+# 426 "lexer.ml"
 
   | 2 ->
-# 107 "lexer.mll"
+# 119 "lexer.mll"
       ( comment lexbuf )
-# 419 "lexer.ml"
+# 431 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_rec lexbuf __ocaml_lex_state

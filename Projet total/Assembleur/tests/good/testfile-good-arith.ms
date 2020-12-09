@@ -1,3 +1,4 @@
+    .section text
 add %rax %rbx %rcx
 add %rax %rbx 42
 
