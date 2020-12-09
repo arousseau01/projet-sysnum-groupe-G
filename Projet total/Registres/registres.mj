@@ -24,8 +24,17 @@ nmux<nbits>(cond, i_1:[nbits], i_0:[nbits]) = (o:[nbits]) where
     end if
 end where
 
-(* 2**log_nregs = nombres de registres *)
-reg_file<log_nregs>
+n_zero<n>() = (o:[n]) where
+    if n = 0 then 
+        o = [];
+    else
+        o = 0 . n_zero<n-1>();
+    end if
+end where
+
+(* 2**log_nregs = nombres de registres
+ * zero : 1 si le premier registre doit etre le registre égal à 0 *)
+reg_file<log_nregs, zero>
 (
     read_addr1:[log_nregs], 
     read_addr2:[log_nregs],
@@ -37,13 +46,17 @@ reg_file<log_nregs>
     o2:[REG_SIZE]
 ) where
     if log_nregs = 0 then
-        (* all the register addresses are the same *)
-        o = ass_reg<REG_SIZE>(write_data, write_en);
-        o1 = o;
-        o2 = o;
+        if zero = 1 then
+            o1 = n_zero<REG_SIZE>();
+            o2 = o1;
+        else    
+            (* all the register addresses are the same *)
+            o1 = ass_reg<REG_SIZE>(write_data, write_en);
+            o2 = o1;
+        end if
     else
-        (* premiere moitie registres *)
-        (o1_low, o2_low) = reg_file<log_nregs-1>(
+        (* premiere moitie des registres *)
+        (o1_low, o2_low) = reg_file<log_nregs-1, zero>(
             read_addr1[1..], 
             read_addr2[1..], 
             write_addr[1..], 
@@ -51,7 +64,7 @@ reg_file<log_nregs>
             write_data
         );
         (* seconde moitie des registres *)
-        (o1_high, o2_high) = reg_file<log_nregs-1>(
+        (o1_high, o2_high) = reg_file<log_nregs-1, 0>(
             read_addr1[1..], 
             read_addr2[1..], 
             write_addr[1..], 
@@ -74,7 +87,7 @@ main(
     o1:[REG_SIZE],
     o2:[REG_SIZE]
 ) where
-    (o1, o2) = reg_file<LOG_REG_NUM>(
+    (o1, o2) = reg_file<LOG_REG_NUM, 1>(
         read_addr1,
         read_addr2,
         write_addr,
