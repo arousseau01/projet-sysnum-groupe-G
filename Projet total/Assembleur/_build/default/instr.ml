@@ -6,7 +6,8 @@ type instr_name =
   | ADDI | SUBI | ORI | NANDI | XORI | NXORI | ANDI 
   | NORI | SLLI | SRLI | SRAI | SEQI | SLTI
   | LW | SW | MOV
-  | BEQ | BNE | BLE | BLT | BGE | BGT 
+  | BEQ | BNE | BLE | BLT | BGE | BGT
+  | JAL | JALR | JR | JMP 
 
 type reg =
   | RZ
@@ -46,33 +47,33 @@ let create_instr name = {
 }
 
 let instr_to_string = function
-  | ADD -> "add"
-  | SUB -> "sub"
-  | OR -> "or"
+  | ADD  -> "add"
+  | SUB  -> "sub"
+  | OR   -> "or"
   | NAND -> "nand"
-  | XOR -> "xor"
+  | XOR  -> "xor"
   | NXOR -> "nxor"
-  | AND -> "and"
-  | NOR -> "nor"
-  | SLL -> "sll"
-  | SRL -> "srl"
-  | SRA -> "sra"
-  | SEQ -> "seq"
-  | SLT -> "slt"
+  | AND  -> "and"
+  | NOR  -> "nor"
+  | SLL  -> "sll"
+  | SRL  -> "srl"
+  | SRA  -> "sra"
+  | SEQ  -> "seq"
+  | SLT  -> "slt"
 
-  | ADDI -> "addi"
-  | SUBI -> "subi"
-  | ORI -> "ori"
+  | ADDI  -> "addi"
+  | SUBI  -> "subi"
+  | ORI   -> "ori"
   | NANDI -> "nandi"
-  | XORI -> "xori"
+  | XORI  -> "xori"
   | NXORI -> "nxori"
-  | ANDI -> "andi"
-  | NORI -> "nori"
-  | SLLI -> "slli"
-  | SRLI -> "srli"
-  | SRAI -> "srai"
-  | SEQI -> "seqi"
-  | SLTI -> "slti" 
+  | ANDI  -> "andi"
+  | NORI  -> "nori"
+  | SLLI  -> "slli"
+  | SRLI  -> "srli"
+  | SRAI  -> "srai"
+  | SEQI  -> "seqi"
+  | SLTI  -> "slti" 
   
   | LW -> "lw"
   | SW -> "sw"
@@ -85,8 +86,13 @@ let instr_to_string = function
   | BGE -> "bge"
   | BGT -> "bgt"
 
+  | JAL  -> "jal"
+  | JALR -> "jalr"
+  | JR   -> "jr"
+  | JMP  -> "jmp"
+
 let reg_to_string = function
-  | RZ -> "%rz"
+  | RZ  -> "%rz"
   | RAX -> "%rax"
   | RBX -> "%rbx"
   | RCX -> "%rcx"
@@ -112,31 +118,173 @@ let is_branch = function
   | BEQ | BNE | BLE | BLT | BGE | BGT -> true
   | _ -> false
 
+let is_jump = function 
+  | JAL | JALR | JR | JMP -> true
+  | _ -> false
+
 let imm_version = function
-  | ADD -> ADDI
-  | SUB -> SUBI
-  | OR -> ORI
+  | ADD  -> ADDI
+  | SUB  -> SUBI
+  | OR   -> ORI
   | NAND -> NANDI
-  | XOR -> XORI
+  | XOR  -> XORI
   | NXOR -> NXORI
-  | AND -> ANDI
-  | NOR -> NORI
-  | SLL -> SLLI
-  | SRL -> SRLI
-  | SRA -> SRAI
-  | SEQ -> SEQI
-  | SLT -> SLTI
-  | _ -> assert false
+  | AND  -> ANDI
+  | NOR  -> NORI
+  | SLL  -> SLLI
+  | SRL  -> SRLI
+  | SRA  -> SRAI
+  | SEQ  -> SEQI
+  | SLT  -> SLTI
+  | _    -> assert false
 
 let reg_num = function
-  | RZ -> 0b000
-  | _ -> failwith "not implemented"
+  | RZ  -> 0b000
+  | RAX -> 0b001
+  | RBX -> 0b010
+  | RCX -> 0b011
+  | RDX -> 0b100
+  | REX -> 0b101
+  | RFX -> 0b110
+  | RGX -> 0b111
  
 let func3 = function
-  | ADD -> failwith "not implemented"
-  | _ -> failwith "not implemented"
+  | ADD  -> 0b000
+  | SUB  -> 0b000
+  | OR   -> 0b100
+  | NAND -> 0b100
+  | XOR  -> 0b001
+  | NXOR -> 0b001
+  | AND  -> 0b101
+  | NOR  -> 0b101
+  | SLL  -> 0b011
+  | SRL  -> 0b010
+  | SRA  -> 0b010
+  | SEQ  -> 0b111
+  | SLT  -> 0b110
 
-(* pareil pour func7 et opcode *)
+  | ADDI  -> 0b000
+  | SUBI  -> 0b000
+  | ORI   -> 0b100
+  | NANDI -> 0b100
+  | XORI  -> 0b001
+  | NXORI -> 0b001
+  | ANDI  -> 0b101
+  | NORI  -> 0b101
+  | SLLI  -> 0b011
+  | SRLI  -> 0b010
+  | SRAI  -> 0b010
+  | SEQI  -> 0b111
+  | SLTI  -> 0b110
+  
+  | LW  -> 0b000
+  | SW  -> 0b000
+
+  | BEQ -> 0b100
+  | BNE -> 0b101
+  | BLE -> 0b110
+  | BLT -> 0b010
+  | BGE -> 0b011
+  | BGT -> 0b111
+
+  | JAL  -> 0b000
+  | JALR -> 0b000
+  | JR   -> 0b000
+  | JMP  -> 0b001
+
+  | _ -> assert false (* Cas du MOV *)
+
+let func7 = function
+  | ADD  -> 0b0
+  | SUB  -> 0b1
+  | OR   -> 0b0
+  | NAND -> 0b1
+  | XOR  -> 0b0
+  | NXOR -> 0b1
+  | AND  -> 0b0
+  | NOR  -> 0b1
+  | SLL  -> 0b0
+  | SRL  -> 0b0
+  | SRA  -> 0b1
+  | SEQ  -> 0b1
+  | SLT  -> 0b1
+
+  | ADDI  -> 0b0
+  | SUBI  -> 0b1
+  | ORI   -> 0b0
+  | NANDI -> 0b1
+  | XORI  -> 0b0
+  | NXORI -> 0b1
+  | ANDI  -> 0b0
+  | NORI  -> 0b1
+  | SLLI  -> 0b0
+  | SRLI  -> 0b0
+  | SRAI  -> 0b1
+  | SEQI  -> 0b1
+  | SLTI  -> 0b1
+  
+  | LW  -> 0b000
+  | SW  -> 0b000
+
+  | BEQ -> 0b1
+  | BNE -> 0b1
+  | BLE -> 0b1
+  | BLT -> 0b1
+  | BGE -> 0b1
+  | BGT -> 0b1
+
+  | JAL  -> 0b0
+  | JALR -> 0b0
+  | JR   -> 0b0
+  | JMP  -> 0b1
+
+  | _ -> assert false (* Cas du MOV *)
+
+let opcode = function
+  | ADD  -> 0b011
+  | SUB  -> 0b011
+  | OR   -> 0b011
+  | NAND -> 0b011
+  | XOR  -> 0b011
+  | NXOR -> 0b011
+  | AND  -> 0b011
+  | NOR  -> 0b011
+  | SLL  -> 0b011
+  | SRL  -> 0b011
+  | SRA  -> 0b011
+  | SEQ  -> 0b011
+  | SLT  -> 0b011
+
+  | ADDI  -> 0b001
+  | SUBI  -> 0b001
+  | ORI   -> 0b001
+  | NANDI -> 0b001
+  | XORI  -> 0b001
+  | NXORI -> 0b001
+  | ANDI  -> 0b001
+  | NORI  -> 0b001
+  | SLLI  -> 0b001
+  | SRLI  -> 0b001
+  | SRAI  -> 0b001
+  | SEQI  -> 0b001
+  | SLTI  -> 0b001
+  
+  | LW  -> 0b000
+  | SW  -> 0b010
+
+  | BEQ -> 0b110
+  | BNE -> 0b110
+  | BLE -> 0b110
+  | BLT -> 0b110
+  | BGE -> 0b110
+  | BGT -> 0b110
+
+  | JAL  -> 0b111
+  | JALR -> 0b101
+  | JR   -> 0b100
+  | JMP  -> 0b110
+
+  | _ -> assert false (* Cas du MOV *)
 
 (***** PRINTING *****)
 
@@ -172,7 +320,23 @@ let pp_instr fmt instr =
         (reg_to_string instr.rs2)
         instr.label
         instr.imm
-    | _ -> failwith "not implemented"
+    | JAL ->
+      fprintf fmt "rd=%s label=%s imm=%d\n"
+        (reg_to_string instr.rd)
+        instr.label
+        instr.imm
+    | JALR -> 
+      fprintf fmt "rd=%s rs1=%s\n"
+        (reg_to_string instr.rd)
+        (reg_to_string instr.rs1)
+    | JR -> 
+      fprintf fmt "rs1=%s\n"
+        (reg_to_string instr.rs1)
+    | JMP -> 
+      fprintf fmt "label=%s imm=%d\n"
+        instr.label
+        instr.imm
+    | _ -> failwith "mov"
 
 let pp_label fmt lab =
   fprintf fmt "label %s pos=%d\n"

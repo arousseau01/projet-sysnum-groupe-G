@@ -1,12 +1,11 @@
-# dune exec ./minias.exe -- --debug tests/good/testfile-good-branch.ms
+# dune build minias.exe
 # OCAMLPARAM: unset
-# Workspace root:
-# "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
-# total/Assembleur"
-$ /usr/bin/nproc > /tmp/dune0060e6.output 2> /dev/null
-# Auto-detected concurrency: 12
+# Workspace root: "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1
+# ENS/sysnum/sysnum-2020/Projet total/Assembleur"
+$ /usr/bin/getconf _NPROCESSORS_ONLN > /var/folders/k7/d2qtvdks1wx73m_xwzgrjwvh0000gn/T/dunea05d54.output 2> /dev/null
+# Auto-detected concurrency: 4
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune325f88.output
+$ /Users/arthur/.opam/default/bin/ocamlc.opt -config > /var/folders/k7/d2qtvdks1wx73m_xwzgrjwvh0000gn/T/dunef40476.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -15,67 +14,68 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune325f88.output
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = "default"
-#  ; toplevel_path = Some External "/home/mathis/.opam/default/lib/toplevel"
-#  ; ocaml_bin = External "/usr/bin"
-#  ; ocaml = Ok External "/home/mathis/.opam/default/bin/ocaml"
-#  ; ocamlc = External "/usr/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/usr/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/usr/bin/ocamldep.opt"
-#  ; ocamlmklib = Ok External "/usr/bin/ocamlmklib.opt"
+#  ; toplevel_path = Some External "/Users/arthur/.opam/default/lib/toplevel"
+#  ; ocaml_bin = External "/Users/arthur/.opam/default/bin"
+#  ; ocaml = Ok External "/Users/arthur/.opam/default/bin/ocaml"
+#  ; ocamlc = External "/Users/arthur/.opam/default/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/Users/arthur/.opam/default/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/Users/arthur/.opam/default/bin/ocamldep.opt"
+#  ; ocamlmklib = Ok External "/Users/arthur/.opam/default/bin/ocamlmklib.opt"
 #  ; env =
 #      map
 #        { "INSIDE_DUNE" :
-#            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/default"
+#            "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/Assembleur/_build/default"
+#        ; "MANPATH" :
+#            "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/Assembleur/_build/install/default/bin"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib"
+#            "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/Assembleur/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib"
+#            "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/Assembleur/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib/toplevel"
+#            "/Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/Assembleur/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
-#  ; findlib_path = [ External "/home/mathis/.opam/default/lib" ]
+#  ; findlib_path = [ External "/Users/arthur/.opam/default/lib" ]
 #  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
-#      { version = "4.08.1"
-#      ; standard_library_default = "/usr/lib/ocaml"
-#      ; standard_library = "/usr/lib/ocaml"
+#      { version = "4.11.1"
+#      ; standard_library_default = "/Users/arthur/.opam/default/lib/ocaml"
+#      ; standard_library = "/Users/arthur/.opam/default/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "x86_64-linux-gnu-gcc"
-#      ; ocamlc_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-fPIC" ]
+#      ; c_compiler = "cc"
+#      ; ocamlc_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv" ]
 #      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
 #      ; ocamlopt_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv" ]
 #      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
 #      ; bytecomp_c_compiler =
-#          [ "x86_64-linux-gnu-gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ; "-D_REENTRANT"
 #          ]
-#      ; bytecomp_c_libraries = [ "-lm"; "-ldl"; "-lpthread" ]
+#      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "x86_64-linux-gnu-gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ; "-D_REENTRANT"
 #          ]
-#      ; native_c_libraries = [ "-lm"; "-ldl" ]
-#      ; cc_profile = [ "-pg" ]
+#      ; native_c_libraries = [ "-lm" ]
+#      ; cc_profile = []
 #      ; architecture = "amd64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "linux"
-#      ; asm = [ "x86_64-linux-gnu-as" ]
+#      ; system = "macosx"
+#      ; asm = [ "clang"; "-arch"; "x86_64"; "-Wno-trigraphs"; "-c" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -86,27 +86,96 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune325f88.output
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-pc-linux-gnu"
-#      ; target = "x86_64-pc-linux-gnu"
-#      ; profiling = true
+#      ; host = "x86_64-apple-darwin19.6.0"
+#      ; target = "x86_64-apple-darwin19.6.0"
+#      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
-#      ; safe_string = false
-#      ; exec_magic_number = "Caml1999X025"
-#      ; cmi_magic_number = "Caml1999I025"
-#      ; cmo_magic_number = "Caml1999O025"
-#      ; cma_magic_number = "Caml1999A025"
-#      ; cmx_magic_number = "Caml1999Y025"
-#      ; cmxa_magic_number = "Caml1999Z025"
-#      ; ast_impl_magic_number = "Caml1999M025"
-#      ; ast_intf_magic_number = "Caml1999N025"
-#      ; cmxs_magic_number = "Caml1999D025"
-#      ; cmt_magic_number = "Caml1999T025"
+#      ; safe_string = true
+#      ; exec_magic_number = "Caml1999X028"
+#      ; cmi_magic_number = "Caml1999I028"
+#      ; cmo_magic_number = "Caml1999O028"
+#      ; cma_magic_number = "Caml1999A028"
+#      ; cmx_magic_number = "Caml1999Y028"
+#      ; cmxa_magic_number = "Caml1999Z028"
+#      ; ast_impl_magic_number = "Caml1999M028"
+#      ; ast_intf_magic_number = "Caml1999N028"
+#      ; cmxs_magic_number = "Caml1999D028"
+#      ; cmt_magic_number = "Caml1999T028"
 #      ; natdynlink_supported = true
 #      ; supports_shared_libraries = true
 #      ; windows_unicode = false
 #      }
 #  }
-# Workspace root:
-# "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
-# total/Assembleur"
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamldep.opt -modules -impl instr.ml) > _build/default/.minias.eobjs/instr.ml.d
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamllex -q -o lexer.ml lexer.mll)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamldep.opt -modules -impl minias.ml) > _build/default/.minias.eobjs/minias.ml.d
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamldep.opt -modules -impl parser.ml) > _build/default/.minias.eobjs/parser.ml.d
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamldep.opt -modules -impl lexer.ml) > _build/default/.minias.eobjs/lexer.ml.d
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I .minias.eobjs/byte -no-alias-deps -opaque -o .minias.eobjs/byte/dune__exe.cmo -c -impl .minias.eobjs/dune__exe.ml-gen)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I .minias.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/byte/dune__exe__Instr.cmo -c -impl instr.ml)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I .minias.eobjs/byte -I .minias.eobjs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o .minias.eobjs/native/dune__exe.cmx -c -impl .minias.eobjs/dune__exe.ml-gen)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I .minias.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/byte/dune__exe__Lexer.cmo -c -impl lexer.ml)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I .minias.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/byte/dune__exe__Parser.cmo -c -impl parser.ml)
+> File "parser.ml", lines 64-73, characters 6-9:
+> 64 | ......begin match s.peek () with 
+> 65 |         | REG r ->
+> 66 |           let _ = s.next () in 
+> 67 |           instr.iname <- JALR; 
+> 68 |           instr.rs1 <- r;
+> 69 |         | IDENT lab -> 
+> 70 |           let _ = s.next () in 
+> 71 |           instr.iname <- JAL;
+> 72 |           instr.label <- lab
+> 73 |       end
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (COLON|EOF|INT _|INSTR _|IND_REG _)
+> File "parser.ml", lines 75-84, characters 6-9:
+> 75 | ......begin match s.peek () with 
+> 76 |         | REG r ->
+> 77 |           let _ = s.next () in 
+> 78 |           instr.iname <- JR;
+> 79 |           instr.rd <- r
+> 80 |         | IDENT lab -> 
+> 81 |           let _ = s.next () in 
+> 82 |           instr.iname <- JMP;
+> 83 |           instr.label <- lab
+> 84 |       end
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (COLON|EOF|INT _|INSTR _|IND_REG _)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I .minias.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/byte/dune__exe__Minias.cmo -c -impl minias.ml)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I .minias.eobjs/byte -I .minias.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/native/dune__exe__Lexer.cmx -c -impl lexer.ml)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I .minias.eobjs/byte -I .minias.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/native/dune__exe__Instr.cmx -c -impl instr.ml)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I .minias.eobjs/byte -I .minias.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/native/dune__exe__Parser.cmx -c -impl parser.ml)
+> File "parser.ml", lines 64-73, characters 6-9:
+> 64 | ......begin match s.peek () with 
+> 65 |         | REG r ->
+> 66 |           let _ = s.next () in 
+> 67 |           instr.iname <- JALR; 
+> 68 |           instr.rs1 <- r;
+> 69 |         | IDENT lab -> 
+> 70 |           let _ = s.next () in 
+> 71 |           instr.iname <- JAL;
+> 72 |           instr.label <- lab
+> 73 |       end
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (COLON|EOF|INT _|INSTR _|IND_REG _)
+> File "parser.ml", lines 75-84, characters 6-9:
+> 75 | ......begin match s.peek () with 
+> 76 |         | REG r ->
+> 77 |           let _ = s.next () in 
+> 78 |           instr.iname <- JR;
+> 79 |           instr.rd <- r
+> 80 |         | IDENT lab -> 
+> 81 |           let _ = s.next () in 
+> 82 |           instr.iname <- JMP;
+> 83 |           instr.label <- lab
+> 84 |       end
+> Warning 8: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (COLON|EOF|INT _|INSTR _|IND_REG _)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I .minias.eobjs/byte -I .minias.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/native/dune__exe__Minias.cmx -c -impl minias.ml)
+$ (cd _build/default && /Users/arthur/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -o minias.exe /Users/arthur/.opam/default/lib/ocaml/str.cmxa -I /Users/arthur/.opam/default/lib/ocaml .minias.eobjs/native/dune__exe.cmx .minias.eobjs/native/dune__exe__Instr.cmx .minias.eobjs/native/dune__exe__Lexer.cmx .minias.eobjs/native/dune__exe__Parser.cmx .minias.eobjs/native/dune__exe__Minias.cmx)

@@ -55,9 +55,33 @@ let parse_instr s =
         | _ -> error "expected a register/immediate"
       end;
     | n when is_branch n ->
+      instr.iname <- n;
       instr.rs1 <- parse_reg s;
       instr.rs2 <- parse_reg s;
       instr.label <- parse_ident s
+    | JAL -> 
+      instr.rd <- parse_reg s;
+      begin match s.peek () with 
+        | REG r ->
+          let _ = s.next () in 
+          instr.iname <- JALR; 
+          instr.rs1 <- r;
+        | IDENT lab -> 
+          let _ = s.next () in 
+          instr.iname <- JAL;
+          instr.label <- lab
+      end
+    | JMP -> 
+      begin match s.peek () with 
+        | REG r ->
+          let _ = s.next () in 
+          instr.iname <- JR;
+          instr.rd <- r
+        | IDENT lab -> 
+          let _ = s.next () in 
+          instr.iname <- JMP;
+          instr.label <- lab
+      end
     | MOV ->
       begin match s.peek () with
         (* store word *)
