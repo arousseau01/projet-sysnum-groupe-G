@@ -1,0 +1,75 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+
+\title{Assembleur Groupe G (minias)}
+\author{Pierre-Alexandre Bazin, Mathis Bouverot \& Arthur Rousseau}
+\date{}
+\parskip1em\parindent0pt\let\ds\displaystyle
+
+\begin{document}
+    \maketitle
+    \section{Utilisation}
+    Pour compiler minias : \texttt{make}.\\
+    Pour assembler un fichier file.ms : \texttt{./minias file.ms}.
+
+    \section{Syntaxe}
+    Les commentaires commencent par ; et s'étendent jusqu'à la fin de la ligne.
+    Un fichier est une suite d'instructions et de labels.
+    
+    \section{Registres}
+    Il y a 7 registres minias nommés rax, rbx, rcx, rdx, rex, rfx, rhx.\\
+    Ces registres sont sur 16 bits.\\
+    Le registre ISA rz n'est pas accessible au programmeur.
+
+    Pour accéder à l'adresse $x$ de la ram, en supposant $x$ dans un registre, 
+    il faut écrire le nom du registre entre parenthèses.\\
+    Exemple : \texttt{mov (\%rax) \%rbx}
+    
+    \section{Instructions}
+    Les instructions ne sont pas exactement celles de l'ISA.\\
+    Les instructions ISA addi, subi, etc. n'existent pas dans minias (utiliser add, sub, etc. à la place).\\ 
+    Les instructions ISA lw, sw n'existent pas dans minias (utiliser mov à la place).\\
+    L'instruction minias mov est traduite en différentes instructions ISA (lw, sw, addi, etc.) en fonction des arguments.
+
+    Syntaxe des instructions :
+    \begin{itemize}
+        \item add, sub, or, nand, xor, nxor, and, nor, sll, srl, sra, seq, slt :\\
+        \texttt{instr dest source1 source2}
+        \begin{itemize}
+            \item \texttt{instr} : nom de l'instruction
+            \item \texttt{dest} : registre
+            \item \texttt{source1} : registre
+            \item \texttt{source2} : registre ou immediate
+        \end{itemize}
+        Exemple : \texttt{add \%rax \%rbx 42} 
+        (fait \texttt{rax $\leftarrow$ rbx + 42}).
+        \item beq, bne, ble, blt, bge, bgt :\\
+        \texttt{instr arg1 arg2 label}
+        \begin{itemize}
+            \item \texttt{instr} : nom de l'instruction
+            \item \texttt{arg1} : registre
+            \item \texttt{arg2} : registre
+            \item \texttt{label} : chaine de caractères 
+        \end{itemize}
+        Exemple : \texttt{beq \%rax \%rbx .L0} 
+        \item mov :\\
+        \texttt{mov dest source}
+        \begin{itemize}
+            \item \texttt{dest} : registre ou mémoire
+            \item \texttt{source} : registre, mémoire ou immediate
+        \end{itemize}
+        Si \texttt{dest} ou \texttt{source} est un emplacement mémoire, le deuxième doit etre un registre.
+    \end{itemize}
+
+    \section{Labels}
+    Un label est une chaine de caractères comprenant des chiffres, 
+    des underscores, des points et au moins une lettre (minuscule ou majuscule).\\
+    Un label peut apparaitre avant une instruction suivi de deux points.\\
+    Exemple :\\
+    \texttt{.L1:\\beq \%rax \%rbx .L1}
+
+\end{document}
