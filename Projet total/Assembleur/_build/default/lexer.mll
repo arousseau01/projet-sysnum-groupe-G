@@ -15,6 +15,7 @@
     | REG of reg
     (* (%rax) *)
     | IND_REG of reg
+    | DOT_SECTION | DOT_SPACE | DATA | TEXT
     | EOF
 
   (* instructions lw, sw, addi, subi, etc. 
@@ -57,6 +58,14 @@
     ("rfx", RFX);
     ("rgx", RGX)] 
 
+  let keyword_table = Hashtbl.create 4
+  let _ = List.iter
+    (fun (name, k) -> Hashtbl.add keyword_table name k)
+    [(".section", DOT_SECTION);
+    (".space", DOT_SPACE);
+    ("data", DATA);
+    ("text", TEXT)]
+
   let parse_int str =
     (* TODO : check it is 16 bits *)
     int_of_string str
@@ -77,8 +86,11 @@ rule token = parse
     try 
       let instr = Hashtbl.find instr_table i in
       INSTR instr
-    with Not_found ->
-      IDENT i
+    with Not_found -> begin
+      try Hashtbl.find keyword_table i 
+      with Not_found ->
+        IDENT i
+    end
   }
   | '%'(ident as i) {
     try 

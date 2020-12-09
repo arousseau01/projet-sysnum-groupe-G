@@ -1,12 +1,12 @@
-# dune exec ./minias.exe -- --debug tests/good/testfile-good-branch.ms
+# dune exec ./minias.exe -- --debug test.ms
 # OCAMLPARAM: unset
 # Workspace root:
 # "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
 # total/Assembleur"
-$ /usr/bin/nproc > /tmp/dune0060e6.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dunec2241e.output 2> /dev/null
 # Auto-detected concurrency: 12
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune325f88.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune8f11ee.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"

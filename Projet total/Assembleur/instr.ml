@@ -29,11 +29,17 @@ type instr =
   mutable label : string (* utilisé dans les instructions branch et jump *)
 }
 
+type section = S_DATA | S_TEXT
+
 type label = {
   mutable lpos : int ; (* offset in the source file *)
-  mutable lname : string
+  mutable lname : string ;
+  mutable section : section
 }
 type prog = instr list * label list
+
+(* size in bytes *)
+let instr_size = 4
 
 let create_instr name = {
   ipos = -1 ;
@@ -94,6 +100,10 @@ let reg_to_string = function
   | REX -> "%rex"
   | RFX -> "%rfx"
   | RGX -> "%rgx"
+
+let section_to_string = function
+  | S_DATA -> "data"
+  | S_TEXT -> "text"
 
 let is_reg_arith = function
   | ADD | SUB | OR | NAND | XOR | NXOR | AND 
@@ -175,9 +185,10 @@ let pp_instr fmt instr =
     | _ -> failwith "not implemented"
 
 let pp_label fmt lab =
-  fprintf fmt "label %s pos=%d\n"
+  fprintf fmt "label %s pos=%d section=%s\n"
     lab.lname
     lab.lpos
+    (section_to_string lab.section)
 
 let print_prog (i_list, lab_list) =
   let fmt = Format.std_formatter in

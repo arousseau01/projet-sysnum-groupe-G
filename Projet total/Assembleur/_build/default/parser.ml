@@ -7,10 +7,37 @@ type stream = {
   next : unit -> Lexer.token ;
 }
 
-let pos = ref 0
+
+let section = ref S_TEXT
+let pos_text = ref 0
+let pos_data = ref 0
 
 exception ParsingError of string
 let error msg = raise (ParsingError msg)
+
+let parse_section s =
+  begin match s.peek () with
+    | DOT_SECTION -> let _ = s.next () in ()
+    | _ -> error "expected .section"
+  end;
+  match s.peek () with
+    | DATA -> let _ = s.next () in section := S_DATA
+    | TEXT -> let _ = s.next () in section := S_TEXT
+    | _ -> error "expected a section name (text/data for instance)"
+
+let parse_space s =
+  begin match s.peek () with
+    | DOT_SPACE -> let _ = s.next () in ()
+    | _ -> error "expected .space"
+  end;
+  let space = match s.peek () with
+    | INT i when i >= 0 -> let _ = s.next () in i
+    | _ -> error "expected a non-negative number"
+  in
+  match !section with
+    | S_DATA -> pos_data := !pos_data + space
+    | S_TEXT -> pos_text := !pos_text + space
+    | _ -> assert false
 
 let parse_reg s = 
   match s.peek () with
@@ -28,7 +55,12 @@ let parse_label s =
     | COLON -> let _ = s.next () in ()
     | _ -> error "expected a colon"
   end;
-  { lname = name ; lpos = !pos }
+  let pos = match !section with
+    | S_TEXT -> !pos_text
+    | S_DATA -> !pos_data
+    | _ -> assert false
+  in
+  { lname = name ; lpos = pos ; section = !section }
 
 (* the lexer doesn't generate 'immediate' instruction names
  * (i.e. it outputs add but never addi) *)
@@ -38,8 +70,8 @@ let parse_instr s =
     | _ -> error "expected an instruction name"
   in
   let instr = create_instr name in
-  instr.ipos <- !pos; 
-  incr pos;
+  instr.ipos <- !pos_text; 
+  pos_text := !pos_text + instr_size;
   begin match name with
     | n when is_reg_arith n -> 
       instr.rd <- parse_reg s;
@@ -98,12 +130,20 @@ let parse_instr s =
   instr
 
 let parse_prog s =
+  (* we need a section at the start of the file *)
+  parse_section s;
   let rec loop i_list lab_list =
     match s.peek () with
       | EOF -> (List.rev i_list, List.rev lab_list)
       | IDENT _ ->
         let l = parse_label s in
         loop i_list (l :: lab_list)
+      | DOT_SECTION -> 
+        parse_section s; 
+        loop i_list lab_list 
+      | DOT_SPACE -> 
+        parse_space s ; 
+        loop i_list lab_list
       | _ ->
         let i = parse_instr s in
         loop (i :: i_list) lab_list
@@ -123,7 +163,13 @@ let parse_prog s =
       if is_branch i.iname then
       try 
         let lab = Hashtbl.find labels i.label in
-        i.imm <- lab.lpos 
+        if lab.section <> S_TEXT
+        then error (Printf.sprintf 
+          "label %s is in section %s but should be in section %s"
+          lab.lname
+          (section_to_string lab.section)
+          (section_to_string S_TEXT))
+        else i.imm <- lab.lpos 
       with Not_found ->
         error ("couldn't find label " ^ i.label)) 
     i_list;
