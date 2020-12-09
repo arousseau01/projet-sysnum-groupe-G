@@ -38,8 +38,6 @@ type label = {
 }
 type prog = instr list * label list
 
-(* size in bytes *)
-let instr_size = 4
 
 let create_instr name = {
   ipos = -1 ;

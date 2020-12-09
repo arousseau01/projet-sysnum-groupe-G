@@ -1,12 +1,12 @@
-# dune exec ./minias.exe -- --debug test.ms
+# dune exec ./minias.exe -- tests/bad/testfile-bad-comment.ms
 # OCAMLPARAM: unset
 # Workspace root:
 # "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
 # total/Assembleur"
-$ /usr/bin/nproc > /tmp/dunec2241e.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dune9cb1c1.output 2> /dev/null
 # Auto-detected concurrency: 12
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune8f11ee.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dunec408e7.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -32,8 +32,6 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune8f11ee.output
 #            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
 #            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib/toplevel"
-#        ; "OCAML_COLOR" : "always"
-#        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_path = [ External "/home/mathis/.opam/default/lib" ]
 #  ; arch_sixtyfour = true

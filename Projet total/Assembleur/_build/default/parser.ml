@@ -12,6 +12,9 @@ let section = ref S_TEXT
 let pos_text = ref 0
 let pos_data = ref 0
 
+(* size in bytes *)
+let instr_size = 4
+
 exception ParsingError of string
 let error msg = raise (ParsingError msg)
 
@@ -65,6 +68,11 @@ let parse_label s =
 (* the lexer doesn't generate 'immediate' instruction names
  * (i.e. it outputs add but never addi) *)
 let parse_instr s = 
+  if !section <> S_TEXT
+  then error (Printf.sprintf 
+    "instructions should only appear in section %s" 
+    (section_to_string S_TEXT));
+
   let name = match s.peek () with
     | INSTR i -> let _ = s.next () in i
     | _ -> error "expected an instruction name"
