@@ -1,9 +1,9 @@
-PWD /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA
+PWD /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA
 INPUT /usr/local/texlive/2019/texmf.cnf
 INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.tex
-OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.log
+INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.tex
+OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.log
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/size10.clo
@@ -172,9 +172,9 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/generic/circuitikz/pgfcircflow.tex
 INPUT /usr/local/texlive/2019/texmf-dist/tex/generic/circuitikz/pgfcircpath.tex
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
-INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.aux
-INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.aux
-OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.aux
+INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.aux
+INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.aux
+OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.aux
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmr10.tfm
@@ -270,9 +270,9 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
-OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.pdf
+OUTPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.pdf
 INPUT /usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/sysnum-2020/Projet total/ISA/ISA.aux
+INPUT /Users/arthur/Documents/Drive Arthur/Ecole/L3S1 ENS/sysnum/projet-sysnum-groupe-G-Arthur/Projet total/ISA/ISA.aux
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc

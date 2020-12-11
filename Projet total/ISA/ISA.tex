@@ -21,13 +21,13 @@
     La RAM et la ROM sont sur \(2^{16}\) bits, avec donc des adresses sur 16 bits. Les entiers manipulés seront toujours signés et sur 16 bits.
     
     \section{Registres}
-    Il y a 8 registres nommés rax, rbx, rcx, rdx, rex, rfx, rgx, rz (registre nul).\\
+    Il y a 8 registres nommés rax, rbx, rcx, rdx, rex, rfx, rhx, rz (registre nul).\\
     Ces registres sont sur 16 bits.\\
     Codage des registres :
 
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
-        rz  & rax & rbx & rcx & rdx & rex & rfx & rgx \\
+        rz  & rax & rbx & rcx & rdx & rex & rfx & rhx \\
         \hline
         000 & 001 & 010 & 011 & 100 & 101 & 110 & 111 \\
         \hline  
@@ -96,8 +96,8 @@
         \texttt{bgt}   & Branch >                        & 110    & 111    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
         \hline
         \texttt{jal}   & Jump and link                   & 111    & 000    & 0      &\texttt{rd=PC+4; PC=imm}         \\
-        \texttt{jalr}  & Jump and link reg               & 101    & 000    & 0      &\texttt{rd=PC+4; PC=rs1}         \\
-        \texttt{jr}    & Jump reg                        & 100    & 000    & 0      &\texttt{PC=rs1}                \\
+        \texttt{jalr}  & Jump and link reg               & 101    & 000    & 0      &\texttt{rd=PC+4; PC=rs1+imm}     \\
+        \texttt{jr}    & Jump reg                        & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
         \texttt{jmp}   & Jump                            & 110    & 001    & 1      &\texttt{PC=imm}                \\
         \hline
     \end{longtable}
