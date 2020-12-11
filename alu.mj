@@ -181,7 +181,7 @@ alu<n>(a:[n], b:[n], funct3:[3], funct7) = (result:[n],a_eq_b,set_less_than) whe
     opcode11=un<n>(mux(funct3[2],a_eq_b,set_less_than));
 end where
 
-main(stop:[0]) = (pc:[16],result:[16]) where
+main() = () where
     ancienpc = n_reg<REG_SIZE>(pc);
     instr = rom<REG_SIZE, INSTR_SIZE>(ancienpc);
     imm = instr[16..];
