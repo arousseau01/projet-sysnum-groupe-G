@@ -112,4 +112,7 @@
         \texttt{movi} & MOV (immediate) & \texttt{rd=imm+0} \\
         \hline
     \end{longtable}
+    \section{Interface}
+    Le simulateur ne pouvant fonctionner à la fréquence d'horloge, on pourra le synchroniser avec celle-ci, en le faisant tourner à un sous-multiple de la vitesse d'horloge.\\
+    On ajoute une fonction \texttt{\_print} qui permettra d'afficher le contenu d'un registre (entier). Celle-ci permettra d'afficher l'horloge.
 \end{document}
