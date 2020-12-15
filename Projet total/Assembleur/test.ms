@@ -1,6 +1,2 @@
     .section text
-mov %rax x
-    .section data
-    .space 4
-x:
-    .space 2
+add %rcx %rcx 1
