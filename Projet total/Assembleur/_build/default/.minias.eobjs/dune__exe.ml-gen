@@ -1,3 +1,6 @@
+(** @canonical Dune__exe.Codegen *)
+module Codegen = Dune__exe__Codegen
+
 (** @canonical Dune__exe.Instr *)
 module Instr = Dune__exe__Instr
 

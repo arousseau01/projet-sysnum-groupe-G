@@ -1,1 +1,1 @@
-minias.ml: Arg Array Format Instr Lexer Lexing Parser Printf Str Sys
+minias.ml: Arg Array Codegen Format Instr Lexer Lexing Parser Printf Str Sys

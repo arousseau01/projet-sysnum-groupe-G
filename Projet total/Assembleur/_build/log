@@ -1,12 +1,12 @@
-# dune exec ./minias.exe -- tests/bad/testfile-bad-comment.ms
+# dune build minias.exe
 # OCAMLPARAM: unset
 # Workspace root:
 # "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
 # total/Assembleur"
-$ /usr/bin/nproc > /tmp/dune76c8ee.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dune8a95ca.output 2> /dev/null
 # Auto-detected concurrency: 12
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune1187f0.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune739799.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -32,6 +32,8 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune1187f0.output
 #            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
 #            "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet total/Assembleur/_build/install/default/lib/toplevel"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_path = [ External "/home/mathis/.opam/default/lib" ]
 #  ; arch_sixtyfour = true
@@ -105,6 +107,10 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune1187f0.output
 #      ; windows_unicode = false
 #      }
 #  }
-# Workspace root:
-# "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
-# total/Assembleur"
+$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl minias.ml) > _build/default/.minias.eobjs/minias.ml.d
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I .minias.eobjs/byte -no-alias-deps -opaque -open Dune__exe -o .minias.eobjs/byte/dune__exe__Codegen.cmo -c -impl codegen.ml)
+> File "codegen.ml", line 4, characters 12-18:
+> 4 |   let opc = opcode i.iname in 
+>                 ^^^^^^
+> Error: Unbound value opcode
+[2]
