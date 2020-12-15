@@ -106,60 +106,39 @@ let string_to_bin s =
          else failwith "input doit contenir 0 et 1 seulement" 
   done;
   VBitArray t
-  
-let rec longword_rom l = match l with 
-  |[] -> 0
-  |t::q -> let (_,exp)=t in 
-    begin match exp with 
-      |Erom(_,lwd,_)-> lwd; 
-      |_-> longword_rom q; 
-    end
-
-let initialiser_rom p = 
-  let lwd=longword_rom p in
-  let source = open_in "rom.bin" in 
-  let l = ref([]) in 
-if lwd<>0 
-then 
-  begin
-  let remplir () = 
-    try
-      while true do 
-        let l2=ref([]) in
-        for i = 1 to lwd do 
-          l2:=((let c=input_char source in 
-                if c='0'
-                then 0 
-                else if c='1' 
-                     then 1 
-                     else failwith "rom.bin incorrect")::(!l2))
-        done;
-        l2:=List.rev(!l2);
-        let t2=Array.of_list (!l2) in
-        l:=(tab_to_bin t2)::(!l);
-      done;
-    with End_of_file -> ();
-  in remplir ();
-  let t=Array.of_list (!l) in
-  t 
-  end
-else [||]
 
 let rec puissance a n = match n with 
   |0 -> a
   |_ -> a*(puissance a (n-1))
 
-let rec longram l = match l with 
-  |[] -> (0,0)
-  |t::q -> let (_,exp) = t in
-    begin match exp with 
-      |Eram(lad,lwd,_,_,_,_)-> (lad,lwd); 
-      |_-> longram q
-    end
+let initialiser_rom p = 
+  let lwd=32 in
+  let source = open_in "rom.bin" in 
+  let t = Array.make (puissance 2 16) (VBitArray (Array.make 32 false)) in  
+  let remplir () = 
+    try
+      let j=ref(0) in 
+      while true do 
+        let tb = Array.make 32 false in 
+        for i = 1 to lwd do 
+          tb.(i) <- (let c=input_char source in 
+            if c='0'
+            then false 
+            else 
+              if c='1' 
+              then true 
+              else failwith "rom.bin incorrect")
+        done;
+        t.(!j) <- VBitArray tb;
+        incr j;
+      done;
+    with 
+    | End_of_file -> ();
+    | _ -> failwith "ROM excédée"
+  in remplir ();
+  t 
 
-let initialiser_ram p = 
-let lad,lwd=longram p in 
-Array.make (puissance 2 lad) (VBitArray (Array.make lwd false))
+let initialiser_ram p = Array.make (puissance 2 16) (VBitArray (Array.make 16 false))
 
 let calculer_arg a r tab = try match a with 
   |Avar x -> Env.find x tab.(r) 
@@ -218,7 +197,7 @@ in
     let da'=calculer_arg da r tab in
     begin match wren' with 
       |VBit false -> ()
-      |VBit true -> ram.(bin_to_int wrad') <- da
+      |VBit true -> ram.(bin_to_int wrad') <- da'
       |_ -> failwith "mauvais test pour la ram"  end;
     List.iter (function x -> 
       try let v = Env.find x tab.(r) in 
