@@ -95,8 +95,8 @@
         \texttt{bge}   & Branch \(\geqslant\)            & 110    & 011    & 1      & \texttt{if(rs1 >= rs2) PC=imm}\\
         \texttt{bgt}   & Branch >                        & 110    & 111    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
         \hline
-        \texttt{jal}   & Jump and link                   & 111    & 000    & 0      &\texttt{rd=PC; PC=imm}         \\
-        \texttt{jalr}  & Jump and link reg               & 101    & 000    & 0      &\texttt{rd=PC; PC=rs1+imm}     \\
+        \texttt{jal}   & Jump and link                   & 111    & 000    & 0      &\texttt{rd=PC+4; PC=imm}         \\
+        \texttt{jalr}  & Jump and link reg               & 101    & 000    & 0      &\texttt{rd=PC+4; PC=rs1+imm}     \\
         \texttt{jr}    & Jump reg                        & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
         \texttt{jmp}   & Jump                            & 110    & 001    & 1      &\texttt{PC=imm}                \\
         \hline
@@ -112,4 +112,7 @@
         \texttt{movi} & MOV (immediate) & \texttt{rd=imm+0} \\
         \hline
     \end{longtable}
+    \section{Interface}
+    Le simulateur ne pouvant fonctionner à la fréquence d'horloge, on pourra le synchroniser avec celle-ci, en le faisant tourner à un sous-multiple de la vitesse d'horloge.\\
+    On ajoute une fonction \texttt{\_print} qui permettra d'afficher le contenu d'un registre (entier). Celle-ci permettra d'afficher l'horloge.
 \end{document}
