@@ -1,1 +1,1 @@
-graph_test.ml: Graph List String
+graph_test.ml: Array Format Fun Graph List
