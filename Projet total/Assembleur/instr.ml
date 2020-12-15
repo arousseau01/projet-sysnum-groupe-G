@@ -147,153 +147,163 @@ let imm_version = function
   | _    -> assert false
 
 let reg_num = function
-  | RZ  -> 0b000
-  | RAX -> 0b001
-  | RBX -> 0b010
-  | RCX -> 0b011
-  | RDX -> 0b100
-  | REX -> 0b101
-  | RFX -> 0b110
-  | RGX -> 0b111
+  | RZ  -> [0;0;0]
+  | RAX -> [0;0;1]
+  | RBX -> [0;1;0]
+  | RCX -> [0;1;1]
+  | RDX -> [1;0;0]
+  | REX -> [1;0;1]
+  | RFX -> [1;1;0]
+  | RGX -> [1;1;1]
  
 let func3 = function
-  | ADD  -> 0b000
-  | SUB  -> 0b000
-  | OR   -> 0b100
-  | NAND -> 0b100
-  | XOR  -> 0b001
-  | NXOR -> 0b001
-  | AND  -> 0b101
-  | NOR  -> 0b101
-  | SLL  -> 0b011
-  | SRL  -> 0b010
-  | SRA  -> 0b010
-  | SEQ  -> 0b111
-  | SLT  -> 0b110
+  | ADD  -> [0;0;0]
+  | SUB  -> [0;0;0]
+  | OR   -> [1;0;0]
+  | NAND -> [1;0;0]
+  | XOR  -> [0;0;1]
+  | NXOR -> [0;0;1]
+  | AND  -> [1;0;1]
+  | NOR  -> [1;0;1]
+  | SLL  -> [0;1;1]
+  | SRL  -> [0;1;0]
+  | SRA  -> [0;1;0]
+  | SEQ  -> [1;1;1]
+  | SLT  -> [1;1;0]
 
-  | ADDI  -> 0b000
-  | SUBI  -> 0b000
-  | ORI   -> 0b100
-  | NANDI -> 0b100
-  | XORI  -> 0b001
-  | NXORI -> 0b001
-  | ANDI  -> 0b101
-  | NORI  -> 0b101
-  | SLLI  -> 0b011
-  | SRLI  -> 0b010
-  | SRAI  -> 0b010
-  | SEQI  -> 0b111
-  | SLTI  -> 0b110
+  | ADDI  -> [0;0;0]
+  | SUBI  -> [0;0;0]
+  | ORI   -> [1;0;0]
+  | NANDI -> [1;0;0]
+  | XORI  -> [0;0;1]
+  | NXORI -> [0;0;1]
+  | ANDI  -> [1;0;1]
+  | NORI  -> [1;0;1]
+  | SLLI  -> [0;1;1]
+  | SRLI  -> [0;1;0]
+  | SRAI  -> [0;1;0]
+  | SEQI  -> [1;1;1]
+  | SLTI  -> [1;1;0]
   
-  | LW  -> 0b000
-  | SW  -> 0b000
+  | LW  -> [0;0;0]
+  | SW  -> [0;0;0]
 
-  | BEQ -> 0b100
-  | BNE -> 0b101
-  | BLE -> 0b110
-  | BLT -> 0b010
-  | BGE -> 0b011
-  | BGT -> 0b111
+  | BEQ -> [1;0;0]
+  | BNE -> [1;0;1]
+  | BLE -> [1;1;0]
+  | BLT -> [0;1;0]
+  | BGE -> [0;1;1]
+  | BGT -> [1;1;1]
 
-  | JAL  -> 0b000
-  | JALR -> 0b000
-  | JR   -> 0b000
-  | JMP  -> 0b001
+  | JAL  -> [0;0;0]
+  | JALR -> [0;0;0]
+  | JR   -> [0;0;0]
+  | JMP  -> [0;0;1]
 
   | _ -> assert false (* Cas du MOV *)
 
 let func7 = function
-  | ADD  -> 0b0
-  | SUB  -> 0b1
-  | OR   -> 0b0
-  | NAND -> 0b1
-  | XOR  -> 0b0
-  | NXOR -> 0b1
-  | AND  -> 0b0
-  | NOR  -> 0b1
-  | SLL  -> 0b0
-  | SRL  -> 0b0
-  | SRA  -> 0b1
-  | SEQ  -> 0b1
-  | SLT  -> 0b1
+  | ADD  -> [0]
+  | SUB  -> [1]
+  | OR   -> [0]
+  | NAND -> [1]
+  | XOR  -> [0]
+  | NXOR -> [1]
+  | AND  -> [0]
+  | NOR  -> [1]
+  | SLL  -> [0]
+  | SRL  -> [0]
+  | SRA  -> [1]
+  | SEQ  -> [1]
+  | SLT  -> [1]
 
-  | ADDI  -> 0b0
-  | SUBI  -> 0b1
-  | ORI   -> 0b0
-  | NANDI -> 0b1
-  | XORI  -> 0b0
-  | NXORI -> 0b1
-  | ANDI  -> 0b0
-  | NORI  -> 0b1
-  | SLLI  -> 0b0
-  | SRLI  -> 0b0
-  | SRAI  -> 0b1
-  | SEQI  -> 0b1
-  | SLTI  -> 0b1
+  | ADDI  -> [0]
+  | SUBI  -> [1]
+  | ORI   -> [0]
+  | NANDI -> [1]
+  | XORI  -> [0]
+  | NXORI -> [1]
+  | ANDI  -> [0]
+  | NORI  -> [1]
+  | SLLI  -> [0]
+  | SRLI  -> [0]
+  | SRAI  -> [1]
+  | SEQI  -> [1]
+  | SLTI  -> [1]
   
-  | LW  -> 0b000
-  | SW  -> 0b000
+  | LW  -> [0]
+  | SW  -> [0]
 
-  | BEQ -> 0b1
-  | BNE -> 0b1
-  | BLE -> 0b1
-  | BLT -> 0b1
-  | BGE -> 0b1
-  | BGT -> 0b1
+  | BEQ -> [1]
+  | BNE -> [1]
+  | BLE -> [1]
+  | BLT -> [1]
+  | BGE -> [1]
+  | BGT -> [1]
 
-  | JAL  -> 0b0
-  | JALR -> 0b0
-  | JR   -> 0b0
-  | JMP  -> 0b1
+  | JAL  -> [0]
+  | JALR -> [0]
+  | JR   -> [0]
+  | JMP  -> [1]
 
   | _ -> assert false (* Cas du MOV *)
 
 let opcode = function
-  | ADD  -> 0b011
-  | SUB  -> 0b011
-  | OR   -> 0b011
-  | NAND -> 0b011
-  | XOR  -> 0b011
-  | NXOR -> 0b011
-  | AND  -> 0b011
-  | NOR  -> 0b011
-  | SLL  -> 0b011
-  | SRL  -> 0b011
-  | SRA  -> 0b011
-  | SEQ  -> 0b011
-  | SLT  -> 0b011
+  | ADD  -> [0;1;1]
+  | SUB  -> [0;1;1]
+  | OR   -> [0;1;1]
+  | NAND -> [0;1;1]
+  | XOR  -> [0;1;1]
+  | NXOR -> [0;1;1]
+  | AND  -> [0;1;1]
+  | NOR  -> [0;1;1]
+  | SLL  -> [0;1;1]
+  | SRL  -> [0;1;1]
+  | SRA  -> [0;1;1]
+  | SEQ  -> [0;1;1]
+  | SLT  -> [0;1;1]
 
-  | ADDI  -> 0b001
-  | SUBI  -> 0b001
-  | ORI   -> 0b001
-  | NANDI -> 0b001
-  | XORI  -> 0b001
-  | NXORI -> 0b001
-  | ANDI  -> 0b001
-  | NORI  -> 0b001
-  | SLLI  -> 0b001
-  | SRLI  -> 0b001
-  | SRAI  -> 0b001
-  | SEQI  -> 0b001
-  | SLTI  -> 0b001
+  | ADDI  -> [0;0;1]
+  | SUBI  -> [0;0;1]
+  | ORI   -> [0;0;1]
+  | NANDI -> [0;0;1]
+  | XORI  -> [0;0;1]
+  | NXORI -> [0;0;1]
+  | ANDI  -> [0;0;1]
+  | NORI  -> [0;0;1]
+  | SLLI  -> [0;0;1]
+  | SRLI  -> [0;0;1]
+  | SRAI  -> [0;0;1]
+  | SEQI  -> [0;0;1]
+  | SLTI  -> [0;0;1]
   
-  | LW  -> 0b000
-  | SW  -> 0b010
+  | LW  -> [0;0;0]
+  | SW  -> [0;1;0]
 
-  | BEQ -> 0b110
-  | BNE -> 0b110
-  | BLE -> 0b110
-  | BLT -> 0b110
-  | BGE -> 0b110
-  | BGT -> 0b110
+  | BEQ -> [1;1;0]
+  | BNE -> [1;1;0]
+  | BLE -> [1;1;0]
+  | BLT -> [1;1;0]
+  | BGE -> [1;1;0]
+  | BGT -> [1;1;0]
 
-  | JAL  -> 0b111
-  | JALR -> 0b101
-  | JR   -> 0b100
-  | JMP  -> 0b110
+  | JAL  -> [1;1;1]
+  | JALR -> [1;0;1]
+  | JR   -> [1;0;0]
+  | JMP  -> [1;1;0]
 
   | _ -> assert false (* Cas du MOV *)
 
+let imm_to_bin n = 
+  let l=ref([]) in 
+  let d=ref(n) in 
+  let r=ref(0) in
+  for i=0 to 15 do
+    r:=!d mod 2;
+    d:=!d / 2;
+    l:=(!r)::(!l);
+  done;
+  !l
 (***** PRINTING *****)
 
 let pp_pos fmt pos =
