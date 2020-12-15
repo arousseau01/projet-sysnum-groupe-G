@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb}
+\usepackage{listings}
 \usepackage[top=3cm,bottom=2cm,left=2cm,right=2cm]{geometry}
 
 \title{Assembleur Groupe G (minias)}
@@ -14,12 +15,24 @@
     \maketitle
     \section{Utilisation}
     Pour compiler minias : \texttt{make}.\\
-    Pour assembler un fichier file.ms : \texttt{./minias file.ms}.
+    Pour assembler un fichier file.ms (sortie dans output.txt): \texttt{./minias file.ms --write-rom output.txt}.
 
     \section{Syntaxe}
-    Les commentaires commencent par ; et s'étendent jusqu'à la fin de la ligne.
-    Un fichier est une suite d'instructions et de labels.
-    
+    Les commentaires commencent par ; et s'étendent jusqu'à la fin de la ligne.\\
+    Un programme est une suite de sections.\\
+    Une section commence par \texttt{.section name} où \texttt{name} est soit \texttt{text} soit \texttt{data},
+    et est une suite d'instructions et de labels.\\
+    Exemple de programme :
+\begin{lstlisting}
+    .section data
+x:  .space 2
+    .section text
+add %rbx %rbx 42
+mov y %rbx
+    .section data
+y:
+\end{lstlisting}
+
     \section{Registres}
     Il y a 7 registres minias nommés rax, rbx, rcx, rdx, rex, rfx, rhx.\\
     Ces registres sont sur 16 bits.\\
@@ -68,8 +81,6 @@
     \section{Labels}
     Un label est une chaine de caractères comprenant des chiffres, 
     des underscores, des points et au moins une lettre (minuscule ou majuscule).\\
-    Un label peut apparaitre avant une instruction suivi de deux points.\\
-    Exemple :\\
-    \texttt{.L1:\\beq \%rax \%rbx .L1}
+    Un label peut apparaitre avant une instruction suivi de deux points.
 
 \end{document}
