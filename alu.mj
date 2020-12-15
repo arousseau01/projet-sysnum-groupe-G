@@ -181,7 +181,7 @@ alu<n>(a:[n], b:[n], funct3:[3], funct7) = (result:[n],a_eq_b,set_less_than) whe
     opcode11=un<n>(mux(funct3[2],a_eq_b,set_less_than));
 end where
 
-main() = () where
+main() = (print_en,result:[REG_SIZE]) where
     ancienpc = n_reg<REG_SIZE>(pc);
     instr = rom<REG_SIZE, INSTR_SIZE>(ancienpc);
     imm = instr[16..];
@@ -191,6 +191,7 @@ main() = () where
     condition = instr[14]^((instr[12]&eq) + (instr[13]&inf));                           (*cas d'une branche : on combine funct3 avec les flags sortant de l'ALU*)
     jump = n_mux<REG_SIZE>(instr[1],imm,alu_result);                                    (*si instr[1]=0, alu_input=imm et alu_result = rs1+imm lorsqu'on saute (car dans ce cas funct3 = funct7 = 0)*)
     (rs1, rs2) = reg_file<LOG_REG_NUM,1> (instr[6..8],instr[9..11],instr[3..5],w_en,result);
+    print_en = w_en & is_null<3>(instr[3..5]);
     w_en = instr[2] + not(instr[1]+instr[0]);                                           (*les opcodes qui écrivent dans rd*)
     alu_input = n_mux<REG_SIZE>(instr[1] & (instr[0]+instr[2]),rs2,imm);
     (alu_result,eq,inf) = alu<REG_SIZE>(rs1,alu_input,instr[12..14],instr[15]);
