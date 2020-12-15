@@ -85,8 +85,8 @@
         \texttt{seqi}  & Set equal (immediate)           & 001    & 111    & 1      & \texttt{rd = (rs1 = imm)?1:0} \\
         \texttt{slti}  & Set less than (immediate)       & 001    & 110    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
         \hline
-        \texttt{lw}    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1]}            \\
-        \texttt{sw}    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1]=rs2}           \\
+        \texttt{lw}    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1+imm]}            \\
+        \texttt{sw}    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1+imm]=rs2}           \\
         \hline
         \texttt{beq}   & Branch ==                       & 110    & 100    & 1      & \texttt{if(rs1 == rs2) PC=imm}\\
         \texttt{bne}   & Branch !=                       & 110    & 101    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\

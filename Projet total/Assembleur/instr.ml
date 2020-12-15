@@ -167,13 +167,15 @@ let pp_instr fmt instr =
         (reg_to_string instr.rs1)
         (string_of_int instr.imm)
     | LW -> 
-      fprintf fmt "rd=%s rs1=%s\n"
+      fprintf fmt "rd=%s rs1=%s imm=%d\n"
         (reg_to_string instr.rd)
         (reg_to_string instr.rs1)
+        instr.imm
     | SW -> 
-      fprintf fmt "rs1=%s rs2=%s\n"
+      fprintf fmt "rs1=%s rs2=%s imm=%d\n"
         (reg_to_string instr.rs1)
         (reg_to_string instr.rs2)
+        instr.imm
     | n when is_branch n ->
       fprintf fmt "rs1=%s rs2=%s label=%s imm=%d\n"
         (reg_to_string instr.rs1)

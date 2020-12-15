@@ -105,7 +105,15 @@ let parse_instr s =
           let _ = s.next () in
           instr.iname <- SW;
           instr.rs1 <- r;
-          instr.rs2 <- parse_reg s
+          instr.rs2 <- parse_reg s;
+          instr.imm <- 0
+        (* store word *)
+          | IDENT i ->
+          let _ = s.next () in
+          instr.iname <- SW;
+          instr.rs1 <- RZ;
+          instr.rs2 <- parse_reg s;
+          instr.label <- i 
         | REG r1 ->
           let _ = s.next () in
           begin match s.peek () with
@@ -123,15 +131,23 @@ let parse_instr s =
               instr.rd <- r1;
               instr.rs1 <- RZ;
               instr.imm <- n
-              (* load word *)
+            (* load word *)
             | IND_REG r2 -> 
               let _ = s.next () in
               instr.iname <- LW;
               instr.rd <- r1;
-              instr.rs1 <- r2
-            | _ -> error "expected a register/indirect register/immediate"
+              instr.rs1 <- r2;
+              instr.imm <- 0
+            (* load word *)
+            | IDENT i ->
+              let _ = s.next () in
+              instr.iname <- LW;
+              instr.rd <- r1;
+              instr.rs1 <- RZ;
+              instr.label <- i
+            | _ -> error "expected a register/indirect register/label/immediate"
           end
-        | _ -> error "expected a register/indirect register"
+        | _ -> error "expected a register/indirect register/label"
       end
     | _ -> failwith ("invalid instruction " ^ (instr_to_string name))
   end;
@@ -157,7 +173,7 @@ let parse_prog s =
         loop (i :: i_list) lab_list
   in
   let i_list, lab_list = loop [] [] in
-  (* fill in immediates for branch instructions,
+  (* fill in immediates for branch/load/store instructions,
    * and check the labels are unique and exist *)
   let labels = Hashtbl.create 8 in
   List.iter 
@@ -166,19 +182,32 @@ let parse_prog s =
       then error ("duplicate label " ^ lab.lname) 
       else Hashtbl.add labels lab.lname lab)
     lab_list;
-  List.iter 
-    (fun i -> 
-      if is_branch i.iname then
-      try 
-        let lab = Hashtbl.find labels i.label in
-        if lab.section <> S_TEXT
-        then error (Printf.sprintf 
-          "label %s is in section %s but should be in section %s"
-          lab.lname
-          (section_to_string lab.section)
-          (section_to_string S_TEXT))
-        else i.imm <- lab.lpos 
-      with Not_found ->
-        error ("couldn't find label " ^ i.label)) 
-    i_list;
+  let fill_immediate i =
+    if i.label <> "" then
+    (* the section the label used in i should be defined in *) 
+    let lab_section_opt = match i.iname with
+      | _ when is_branch i.iname -> Some S_TEXT
+      | LW | SW -> Some S_DATA
+      | _ -> None
+    in
+    match lab_section_opt with
+    | None -> ()
+    | Some lab_section ->
+      begin 
+        try 
+          let lab = Hashtbl.find labels i.label in
+          if lab.section <> lab_section
+          then error (Printf.sprintf 
+            "label %s is defined in section %s but should be defined in section %s"
+            lab.lname
+            (section_to_string lab.section)
+            (section_to_string lab_section))
+          else i.imm <- lab.lpos 
+        with Not_found ->
+          error (Printf.sprintf 
+            "couldn't find label %s" 
+            i.label)
+      end
+  in
+  List.iter fill_immediate i_list;
   (i_list, lab_list)
