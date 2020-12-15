@@ -1,0 +1,14 @@
+(** @canonical Dune__exe.Codegen *)
+module Codegen = Dune__exe__Codegen
+
+(** @canonical Dune__exe.Instr *)
+module Instr = Dune__exe__Instr
+
+(** @canonical Dune__exe.Lexer *)
+module Lexer = Dune__exe__Lexer
+
+(** @canonical Dune__exe.Minias *)
+module Minias = Dune__exe__Minias
+
+(** @canonical Dune__exe.Parser *)
+module Parser = Dune__exe__Parser
