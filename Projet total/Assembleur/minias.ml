@@ -69,4 +69,11 @@ let compile () =
       Format.eprintf "assembler internal error\n";
       exit 2
 
-let _ = compile ()
+(*let _ = compile ()*)
+
+let _ =
+  let zero_4 = [0; 0; 0; 0] in
+  let zero_8 = zero_4 @ zero_4 in
+  let i = zero_8 @ zero_8 @ [1; 0; 1; 0] @ zero_4 @ zero_8 in
+  let prog = [i; i; i] in
+  Codegen.print_bin_prog prog

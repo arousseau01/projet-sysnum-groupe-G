@@ -1,3 +1,6 @@
     .section text
-.L1:
-    add %rax %rbx 42
+mov %rax x
+
+    .space 4
+x:
+    .space 2
