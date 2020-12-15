@@ -45,8 +45,7 @@ let rec loop p vars rom ram ntot = function
 let simulator program n = let lrom = ref 0 in let wrom = ref 0 in let lram = ref 0 in let wram = ref 0 in 
   List.iter (fun (x,e) -> match e with Erom (n,m,r)-> lrom:=p2 n;wrom:=m | Eram (n,m,r,b,c,d)-> lram:=p2 n;wram:=m | _->()) program.p_eqs;
   let h = Hashtbl.create 0 in Env.iter (fun x t -> Hashtbl.add h x (match t with TBit -> VBit false | TBitArray m -> VBitArray (Array.make m false))) program.p_vars;
-  loop program h (Array.init !lrom (let r = ref false in fun k -> if !r then VBitArray (Array.make !wrom false) else begin
-    let t = read_input (TBitArray !wrom) in (let VBitArray a = t in if Array.for_all (fun b->b) a then r:=true);t end))
+  loop program h (Array.init !lrom (fun k -> begin try read_input (TBitArray !wrom) with End_of_file -> VBitArray (Array.make !wrom true) end))
     (Array.make !lram (VBitArray (Array.make !wram false))) 
     n n
 
