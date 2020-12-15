@@ -117,7 +117,7 @@ let parse_instr s =
         | REG r ->
           let _ = s.next () in 
           instr.iname <- JR;
-          instr.rd <- r
+          instr.rs1 <- r
         | IDENT lab -> 
           let _ = s.next () in 
           instr.iname <- JMP;
@@ -213,6 +213,7 @@ let parse_prog s =
     (* the section the label used in i should be defined in *) 
     let lab_section_opt = match i.iname with
       | _ when is_branch i.iname -> Some S_TEXT
+      | _ when is_jump i.iname -> Some S_TEXT
       | LW | SW -> Some S_DATA
       | _ -> None
     in
