@@ -175,6 +175,12 @@ let parse_instr s =
           end
         | _ -> error "expected a register/indirect register/label"
       end
+    | PRINT ->
+      (* printing is done by writing to %rz *)
+      instr.iname <- ADDI;
+      instr.rd <- RZ;
+      instr.rs1 <- parse_reg s;
+      instr.imm <- 0
     | _ -> failwith ("invalid instruction " ^ (instr_to_string name))
   end;
   instr
