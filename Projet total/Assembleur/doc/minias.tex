@@ -27,8 +27,8 @@
     .section data
 x:  .space 2
     .section text
-add %rbx %rbx 42
-mov y %rbx
+    add %rbx %rbx 42
+    mov y %rbx
     .section data
 y:
 \end{lstlisting}
@@ -60,6 +60,7 @@ y:
         \end{itemize}
         Exemple : \texttt{add \%rax \%rbx 42} 
         (fait \texttt{rax $\leftarrow$ rbx + 42}).
+        
         \item beq, bne, ble, blt, bge, bgt :\\
         \texttt{instr arg1 arg2 label}
         \begin{itemize}
@@ -69,6 +70,7 @@ y:
             \item \texttt{label} : chaine de caractères 
         \end{itemize}
         Exemple : \texttt{beq \%rax \%rbx .L0} 
+        
         \item mov :\\
         \texttt{mov dest source}
         \begin{itemize}
@@ -76,6 +78,27 @@ y:
             \item \texttt{source} : registre, mémoire ou immediate
         \end{itemize}
         Si \texttt{dest} ou \texttt{source} est un emplacement mémoire, le deuxième doit etre un registre.
+
+        \item jmp :\\
+        \texttt{jmp addr}
+        \begin{itemize}
+            \item \texttt{addr} : registre ou label
+        \end{itemize}
+
+        \item jal :\\
+        \texttt{jal rsave addr}
+        \begin{itemize}
+            \item \texttt{addr} : registre ou label
+            \item \texttt{rsave} : registre
+        \end{itemize}
+        Sauvegarde PC+4 dans \texttt{rsave}, puis jump vers \texttt{addr}.
+
+        \item print :\\
+        \texttt{print source}
+        \begin{itemize}
+            \item \texttt{source} : registre
+        \end{itemize}
+        Affiche le contenu de \texttt{source} en l'interprétant comme un code ASCII.
     \end{itemize}
 
     \section{Labels}

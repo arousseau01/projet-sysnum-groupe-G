@@ -13,6 +13,8 @@ let codegen_instr i =
 let codegen_prog i_list = 
   List.map codegen_instr i_list
 
+
+(*let rom_size = Int.shift_left 1 16*)
 let write_to_file fname i_list =
   let f = open_out fname in
   let write_instr i =
@@ -30,6 +32,14 @@ let write_to_file fname i_list =
     loop i
   in
   List.iter write_instr i_list;
+  (*let rec zero size =
+    if size = 0 then []
+    else 0 :: (zero (size-1))
+  in
+  let zero_32 = zero 32 in
+  for _ = 1 to rom_size - (List.length i_list) do
+    write_instr zero_32
+  done;*)
   close_out f
 
 (***** PRINTING *****)
