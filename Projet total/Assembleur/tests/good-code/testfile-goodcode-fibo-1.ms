@@ -2,8 +2,9 @@
 .main:
     mov %rax 0 
     mov %rbx 1
-    mov %rcx 42
-    bne %rcx 0 .fibo
+    mov %rcx 10
+    mov %rfx 0
+    bne %rcx %rfx .double    
     jmp .print
 
 .fibo:
@@ -11,7 +12,8 @@
     add %rbx %rax %rbx
     mov %rax %rdx
     sub %rcx %rcx 1
-    bne %rcx 0 .fibo
+    mov %rfx 0
+    bne %rcx %rfx .double
     jmp .print
 
 .print:
