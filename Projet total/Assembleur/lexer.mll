@@ -45,8 +45,11 @@
     ("blt", BLT);
     ("bge", BGE);
     ("bgt", BGT);
+
     ("jal", JAL);
-    ("jmp", JMP)]
+    ("jmp", JMP);
+    
+    ("print", PRINT)]
 
   (* register %rz is not visible to the programmer *)
   let reg_table = Hashtbl.create 8

@@ -1,2 +1,2 @@
     .section text
-add %rcx %rcx 1
+print %rax

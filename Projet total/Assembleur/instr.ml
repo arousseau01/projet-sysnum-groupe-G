@@ -8,6 +8,7 @@ type instr_name =
   | LW | SW | MOV
   | BEQ | BNE | BLE | BLT | BGE | BGT
   | JAL | JALR | JR | JMP 
+  | PRINT
 
 type reg =
   | RZ
@@ -94,6 +95,8 @@ let instr_to_string = function
   | JALR -> "jalr"
   | JR   -> "jr"
   | JMP  -> "jmp"
+
+  | PRINT -> "print"
 
 let reg_to_string = function
   | RZ  -> "%rz"
@@ -357,7 +360,7 @@ let pp_instr fmt instr =
       fprintf fmt "label=%s imm=%d\n"
         instr.label
         instr.imm
-    | _ -> failwith "mov"
+    | _ -> assert false
 
 let pp_label fmt lab =
   fprintf fmt "label %s pos=%d section=%s\n"

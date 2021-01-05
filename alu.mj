@@ -184,18 +184,18 @@ end where
 main() = (print_en,result:[REG_SIZE]) where
     ancienpc = n_reg<REG_SIZE>(pc);
     instr = rom<REG_SIZE, INSTR_SIZE>(ancienpc);
-    imm = instr[16..];
+    imm = instr[..15];
     une = un<REG_SIZE>(1);
     (pc2, c_out) = n_adder<REG_SIZE> (ancienpc, une, 0);
-    pc = n_mux<REG_SIZE>(instr[0] & (condition + not(instr[1]) + instr[2]),jump,pc2);   (*on saute si on peut sauter et (ce n'est pas une branche ou la condition de la branche est remplie)*)
-    condition = instr[14]^((instr[12]&eq) + (instr[13]&inf));                           (*cas d'une branche : on combine funct3 avec les flags sortant de l'ALU*)
-    jump = n_mux<REG_SIZE>(instr[1],imm,alu_result);                                    (*si instr[1]=0, alu_input=imm et alu_result = rs1+imm lorsqu'on saute (car dans ce cas funct3 = funct7 = 0)*)
-    (rs1, rs2) = reg_file<LOG_REG_NUM,1> (instr[6..8],instr[9..11],instr[3..5],w_en,result);
-    print_en = w_en & is_null<3>(instr[3..5]);
-    w_en = instr[2] + not(instr[1]+instr[0]);                                           (*les opcodes qui écrivent dans rd*)
-    alu_input = n_mux<REG_SIZE>(instr[1] & (instr[0]+instr[2]),rs2,imm);
-    (alu_result,eq,inf) = alu<REG_SIZE>(rs1,alu_input,instr[12..14],instr[15]);
-    load = ram<REG_SIZE, REG_SIZE>(alu_result, not(instr[0]) & instr[1] & not(instr[2]) , alu_result,rs2);
-    result = n_mux<REG_SIZE>(instr[2],result2,load);                                     (*Branche FAUX de ce mux utile uniquement dans le cas opcode=000, puisque sinon write_en=0.*)
-    result2 = n_mux<REG_SIZE>(instr[0],pc2,alu_result);                                  (*Ce résultat sert si instr[2]=1. Si de plus instr[0]=1, c'est un jump and link, sinon c'est un résultat d'ALU*)
+    pc = n_mux<REG_SIZE>(instr[29] & (condition + not(instr[30]) + instr[31]),jump,pc2);   (*on saute si on peut sauter et (ce n'est pas une branche ou la condition de la branche est remplie)*)
+    condition = instr[19]^((instr[17]&eq) + (instr[18]&inf));                              (*cas d'une branche : on combine funct3 avec les flags sortant de l'ALU*)
+    jump = n_mux<REG_SIZE>(instr[30],imm,alu_result);                                      (*si instr[1]=0, alu_input=imm et alu_result = rs1+imm lorsqu'on saute (car dans ce cas funct3 = funct7 = 0)*)
+    (rs1, rs2) = reg_file<LOG_REG_NUM,1> (instr[23..25],instr[20..22],instr[26..28],w_en,result);
+    print_en = w_en & is_null<3>(instr[26..28]);
+    w_en = instr[31] + not(instr[30]+instr[29]);                                           (*les opcodes qui écrivent dans rd*)
+    alu_input = n_mux<REG_SIZE>(instr[30] & (instr[29]+instr[31]),rs2,imm);
+    (alu_result,eq,inf) = alu<REG_SIZE>(rs1,alu_input,instr[17..19],instr[16]);
+    load = ram<REG_SIZE, REG_SIZE>(alu_result, not(instr[29]) & instr[30] & not(instr[31]) , alu_result,rs2);
+    result = n_mux<REG_SIZE>(instr[31],result2,load);                                      (*Branche FAUX de ce mux utile uniquement dans le cas opcode=000, puisque sinon write_en=0.*)
+    result2 = n_mux<REG_SIZE>(instr[29],pc2,alu_result);                                   (*Ce résultat sert si instr[2]=1. Si de plus instr[0]=1, c'est un jump and link, sinon c'est un résultat d'ALU*)
 end where
