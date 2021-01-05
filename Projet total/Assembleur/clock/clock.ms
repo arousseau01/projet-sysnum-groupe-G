@@ -1,12 +1,12 @@
     .section text
-    ; -1 secondes, -2 minutes, -3 heures, -4 jours, -5 mois, -6 années
+    ; -9 secondes, -10 minutes, -11 heures, -12 jours, -13 mois, -14 années
     ; rax sert pour l'adressage mémoire (stocke un des nombres ci-dessus)
     ; rbx sert au décompte de la date (stocke le nombre de secondes, minutes...)
     ; rcx sert aux comparaisons (stocke le nombre max de secondes,minutes... ou le numéro du mois)
     ; A chaque étape correspond l'incrémentation de son nom, impair, pair et février incrémentent les jours
 
 .secondes:
-    mov %rax -1
+    mov %rax -9
     mov %rbx (%rax)
     add %rbx %rbx 1
     mov %rcx 60
@@ -15,7 +15,7 @@
 
 .minutes:
     mov (%rax) 0
-    mov %rax -2
+    mov %rax -10
     mov %rbx (%rax)
     add %rbx %rbx 1
     mov %rcx 60
@@ -24,7 +24,7 @@
 
 .heures:
     mov (%rax) 0
-    mov %rax -3
+    mov %rax -11
     mov %rbx (%rax)
     add %rbx %rbx 1
     mov %rcx 24
@@ -33,11 +33,11 @@
 
 .jours:
     mov (%rax) 0
-    mov %rax -4
+    mov %rax -12
     mov %rbx (%rax)
     add %rbx %rbx 1
 
-    mov %rax -5 
+    mov %rax -13 
     mov %rcx 1
     beq %rax %rcx .impair
     mov %rcx 3
@@ -66,25 +66,25 @@
 .impair:
     mov %rcx 31
     beq %rbx %rcx .mois
-    mov %rax -4
+    mov %rax -12
     mov (%rax) %rbx
 
 .pair:
     mov %rcx 30
     beq %rbx %rcx .mois
-    mov %rax -4
+    mov %rax -12
     mov (%rax) %rbx
 
 .février:
     mov %rcx 28
     beq %rbx %rcx .mois
-    mov %rax -4
+    mov %rax -12
     mov (%rax) %rbx
 
 .mois:
-    mov %rax -4
+    mov %rax -12
     mov (%rax) 1
-    mov %rax -5
+    mov %rax -13
     mov %rbx (%rax)
     add %rbx %rbx 1
     mov %rcx 13
@@ -93,7 +93,7 @@
 
 .années:
     mov (%rax) 1
-    mov %rax -6
+    mov %rax -14
     mov %rbx (%rax)
     add %rbx %rbx 1
     mov (%rax) %rbx
