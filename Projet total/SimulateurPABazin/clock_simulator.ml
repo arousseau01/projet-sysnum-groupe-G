@@ -92,4 +92,4 @@ let compile filename =
   with
     | Netlist.Parse_error s -> Format.eprintf "An error accurred: %s@." s; exit 2;;
 
-compile "../alu.net"
+compile "../Processeur/alu.net"
