@@ -72,13 +72,14 @@
     ("text", TEXT)]
 
   let parse_int str =
-    (* TODO : check it is 16 bits *)
-    int_of_string str
+    let n = int_of_string str in
+    if n>=0 then if n<=32767 then n else error "only 16-bit integers supported"
+    else if n>= -32768 then 65536+n else error "only 16-bit integers supported"
 }
 
 let digit = ['0'-'9']
 let alpha = ['a'-'z' 'A'-'Z' '_' '.']
-let num = digit+
+let num = '-'?digit+
 let ident = (alpha|digit)*alpha(alpha|digit)*
 
 rule token = parse

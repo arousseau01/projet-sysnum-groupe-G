@@ -2,14 +2,14 @@ let file = ref ""
 let debug = ref false
 let rom_file = ref ""
 
-let correct_format f =
+(*let correct_format f =
   let r = Str.regexp ".+\\.ms$" in
-  Str.string_match r f 0
+  Str.string_match r f 0*)
 
 let anon_param f =
   if !file <> "" then
     raise (Arg.Bad "expected a single minias file")
-  else if not (correct_format f) then
+  else if not (Filename.check_suffix f ".ms") then
     raise (Arg.Bad "expected a minias file (extension .ms)")
   else if not (Sys.file_exists f) then
     raise (Arg.Bad ("no such file : " ^ f))
