@@ -17,12 +17,33 @@
 
 \begin{document}
     \maketitle
+
+    \section{Entiers}
+
+    Tous les entiers manipulés sont signés et sur 16 bits.
+
     \section{Mémoire}
-    La RAM et la ROM sont sur \(2^{16}\) bits, avec donc des adresses sur 16 bits. Les entiers manipulés seront toujours signés et sur 16 bits.
-    
+    La RAM a des adresses sur 16 bits, et ses mots sont de longueur 16 bits.
+    L'entièreté des $2^{16}$ mots de la RAM sont adressables. 
+    Une partie de la RAM est réservée aux entrées et sorties du processeur.
+
+    \begin{tabular}{|c|c|}
+        \hline
+        \texttt{adresse de début} & \texttt{fonction} \\
+        \hline
+        $0$ & aucune \\
+        \hline
+        $2^{16}-16$ & sorties \\
+        \hline    
+        $2^{16}-8$ & entrées \\
+        \hline
+    \end{tabular}
+
     \section{Registres}
-    Il y a 8 registres nommés rax, rbx, rcx, rdx, rex, rfx, rgx, rz (registre nul).\\
-    Ces registres sont sur 16 bits.\\
+    
+    Il y a 8 registres nommés rax, rbx, rcx, rdx, rex, rfx, rgx, rz (registre nul).
+    Ces registres sont sur 16 bits. 
+    
     Codage des registres :
 
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -50,7 +71,7 @@
         \item \texttt{imm} sur 16 bits
     \end{itemize}
 
-    Instructions possibles :
+    Liste des instructions :
 
     \begin{longtable}{|l|l|c|c|c|l|}
         \hline
@@ -102,21 +123,8 @@
         \hline
     \end{longtable}
 
-    On ajoute du sucre syntaxique:
-
-    \begin{longtable}{|l|l|l|}
-        \hline
-        Inst          & Nom             & Description       \\
-        \hline
-        \texttt{mov}  & MOV             & \texttt{rd=rs1+0} \\
-        \texttt{movi} & MOV (immediate) & \texttt{rd=imm+0} \\
-        \hline
-    \end{longtable}
-    \section{Interface}
-    Le simulateur ne pouvant fonctionner à la fréquence d'horloge, on pourra le synchroniser avec celle-ci, en le faisant tourner à un sous-multiple de la vitesse d'horloge.\\
-    On ajoute une fonction \texttt{\_print} qui permettra d'afficher le contenu d'un registre (entier). Celle-ci permettra d'afficher l'horloge.\\
-
-    Régions de la mémoire réservées : adresses \(2^{16}-8\) à \(2^{16}-1\) : entrées, adresses \(2^{16}-16\) à \(2^{16}-9\) : sorties.
+    On ajoute du sucre syntaxique au niveau de l'assembleur : certaines instructions ISA 
+    sont regroupées en une seule instruction assembleur (exemple : \texttt{mov} correspond aux instructions ISA \texttt{lw}, \texttt{addi}, \texttt{sw} entre autres).
 
 
 \end{document}
