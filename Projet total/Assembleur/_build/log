@@ -1,0 +1,7 @@
+# dune ocaml-merlin --no-print-directory
+# OCAMLPARAM: unset
+# Workspace root:
+# "/home/mathis/Desktop/SYSDIG/Projet/projet-sysnum-groupe-G/Projet
+# total/Assembleur"
+$ /usr/bin/nproc > /tmp/dune32f43e.output 2> /dev/null
+# Auto-detected concurrency: 12
