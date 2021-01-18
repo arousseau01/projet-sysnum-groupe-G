@@ -170,12 +170,6 @@
 
 
 \Large
-\begin{frame}
-    \frametitle{ISA - Instructions}
-    On ajoute du sucre syntaxique au niveau de l'assembleur : certaines instructions ISA sont regroupées en une seule instruction assembleur (exemple : \texttt{mov} correspond aux instructions ISA \texttt{lw}, \texttt{addi}, \texttt{sw} entre autres).
-\end{frame}
-
-
 \begin{frame}[fragile]
     \frametitle{Assembleur - Exemple}
     Syntaxe proche de x86-64 :
@@ -201,6 +195,7 @@
     \begin{itemize}
         \item Pas de distinction entre add/addi, sub/subi, etc.
         \item Une seule instruction \texttt{mov} pour toutes les copies.
+        \item Les instructions de type jump sont regroupées : il en reste 2 dans l'assembleur.
     \end{itemize}
 \end{frame}
 
