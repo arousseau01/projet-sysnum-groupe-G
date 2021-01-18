@@ -1,0 +1,201 @@
+const REG_SIZE = 16 (*taille des registres et des cases de la ram*)
+const INSTR_SIZE = 32 (*taille des instructions en rom*)
+const LOG_REG_NUM = 3
+const REG_NUM = 8
+
+fulladder(a,b,c) = (s, r) where
+  s = (a ^ b) ^ c;
+  r = (a & b) + ((a ^ b) & c);
+end where
+
+n_xor<n>(a:[n], b:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_xor<n-1>(a[1..],b[1..]);
+        t=a[0] ^ b[0];
+        o = t.q
+    end if
+end where
+
+n_or<n>(a:[n], b:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_or<n-1>(a[1..],b[1..]);
+        t=a[0] + b[0];
+        o = t.q
+    end if
+end where
+
+n_and<n>(a:[n], b:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_and<n-1>(a[1..],b[1..]);
+        t=a[0] & b[0];
+        o = t.q
+    end if
+end where
+
+n_not<n>(a:[n]) = (o:[n]) where
+    if n=0 then
+        o=[]
+    else
+        q=n_not<n-1>(a[1..]);
+        t=not a[0];
+        o = t.q
+    end if
+end where
+
+n_adder<n>(a:[n], b:[n], c_in) = (o:[n], c_out) where
+  if n = 0 then
+    o = [];
+    c_out = 0
+  else
+    (s_n1, c_n1) = n_adder<n-1>(a[1..], b[1..], c_in);
+    (s_n, c_out) = fulladder(a[0], b[0], c_n1);
+    o = s_n . s_n1
+  end if
+end where
+
+(*renvoie 0...00 ou 0...01*)
+un<n>(bit) = (u:[n]) where if n=1 then u = bit else u = 0.un<n-1>(bit) end if end where
+
+n_reg<n>(x:[n]) = (y:[n]) where 
+  if n=0 then y = [] 
+  else y = reg(x[0]).n_reg<n-1>(x[1..]) 
+end if end where
+
+(* registre assembleur *)
+ass_reg<nbits>(i:[nbits], write_en) = (o:[nbits]) where
+    if nbits = 0 then
+        o = []
+    else    
+        t = mux(write_en, i[0], o_0);
+        o_0 = reg(t);
+        o_n1 = ass_reg<nbits-1>(i[1..], write_en);
+        o = o_0 . o_n1;
+    end if
+end where
+
+n_mux<nbits>(cond, i_1:[nbits], i_0:[nbits]) = (o:[nbits]) where
+    if nbits = 0 then
+        o = []
+    else
+        o_0 = mux(cond, i_1[0], i_0[0]);
+        o_n1 = n_mux<nbits-1>(cond, i_1[1..], i_0[1..]);
+        o = o_0 . o_n1;
+    end if
+end where
+
+(* 2**log_nregs = nombres de registres *)
+(* zero : 1 si le premier registre doit etre le registre égal à 0 *)
+reg_file<log_nregs,zero>
+(
+    read_addr1:[log_nregs], 
+    read_addr2:[log_nregs],
+    write_addr:[log_nregs],
+    write_en,
+    write_data:[REG_SIZE]
+) = (
+    o1:[REG_SIZE],
+    o2:[REG_SIZE]
+) where
+    if log_nregs = 0 then
+        if zero = 1 then
+            o1 = un<REG_SIZE>(0);
+            o2 = o1;
+        else    
+            (* all the register addresses are the same *)
+            o1 = ass_reg<REG_SIZE>(write_data, write_en);
+            o2 = o1;
+        end if
+    else
+        (* premiere moitie registres *)
+        (o1_low, o2_low) = reg_file<log_nregs-1,zero>(
+            read_addr1[1..], 
+            read_addr2[1..], 
+            write_addr[1..], 
+            (not write_addr[0]) & write_en, 
+            write_data
+        );
+        (* seconde moitie des registres *)
+        (o1_high, o2_high) = reg_file<log_nregs-1,0>(
+            read_addr1[1..], 
+            read_addr2[1..], 
+            write_addr[1..], 
+            write_addr[0] & write_en, 
+            write_data
+        );
+        o1 = n_mux<REG_SIZE>(read_addr1[0], o1_high, o1_low);
+        o2 = n_mux<REG_SIZE>(read_addr2[0], o2_high, o2_low);
+    end if
+end where
+
+sl<n,log_n>(a:[n],b:[log_n]) = (res:[n]) where 
+    if log_n = 0 then
+        res = a
+    else
+        b1 = b[..log_n-2];
+        a1 = sl<n,log_n-1>(a,b1);
+        a2 = sl<n,log_n-1>(a1,b1);
+        res = n_mux<n>(b[log_n-1],a2[1..].0,a2);
+    end if
+end where
+
+sr<n,log_n>(a:[n],b:[log_n],signed) = (res:[n]) where 
+    if log_n = 0 then
+        res = a
+    else
+        b1 = b[..log_n-2];
+        a1 = sr<n,log_n-1>(a,b1,signed);
+        a2 = sr<n,log_n-1>(a1,b1,signed);
+        res = n_mux<n>(b[log_n-1],(a2[0] & signed).a2[..n-2],a2);
+    end if
+end where
+
+is_null<n>(a:[n])=(nul) where 
+    if n = 0 then nul = 1
+    else nul = not(a[0]) & is_null<n-1>(a[1..])
+end if end where
+
+alu<n>(a:[n], b:[n], funct3:[3], funct7) = (result:[n],a_eq_b,set_less_than) where
+    b'=n_mux<n>(funct7,n_not<n>(b),b);
+    a'=n_mux<n>(funct7,n_not<n>(a),a);
+    (a_sum_b1,c_out)=n_adder<n+1>(a[0].a,b'[0].b',funct7);
+    a_sum_b=a_sum_b1[1..];
+    a_et_b=n_and<n>(a',b');
+    a_ou_b=n_or<n>(a',b');
+    a_xor_b=n_xor<n>(a,b');
+    a_sl_b= sl<n,4>(a,b[n-4..]);                (*Un shift de l'ordre de 2^(n-1) bits sur un registre de taille n serait inutile et demanderait beaucoup trop de portes.*)
+    a_sr_b= sr<n,4>(a,b[n-4..],funct7);         (*C'est pourquoi seuls les 4 bits de poids faible de b sont pris en compte pour la longueur du shift (on notera que n=16).*)
+    set_less_than= a_sum_b1[0];                 (* < strict: test a-b<0 *)
+    a_eq_b = is_null<n>(a_sum_b);               (* = : test a-b = 0*) (*Attention : les flags ne sont bien placés que si funct7=1.*)
+    result=n_mux<n>(funct3[0],opcode1,opcode0);     (*mux bourin du funct3*)
+    opcode1=n_mux<n>(funct3[1],opcode11,opcode10);
+    opcode0=n_mux<n>(funct3[1],opcode01,opcode00);
+    opcode00=n_mux<n>(funct3[2],a_xor_b,a_sum_b);
+    opcode01=n_mux<n>(funct3[2],a_sl_b,a_sr_b);
+    opcode10=n_mux<n>(funct3[2],a_et_b,a_ou_b);
+    opcode11=un<n>(mux(funct3[2],a_eq_b,set_less_than));
+end where
+
+main() = (print_en,result:[REG_SIZE]) where
+    ancienpc = n_reg<REG_SIZE>(pc);
+    instr = rom<REG_SIZE, INSTR_SIZE>(ancienpc);
+    imm = instr[..15];
+    une = un<REG_SIZE>(1);
+    (pc2, c_out) = n_adder<REG_SIZE> (ancienpc, une, 0);
+    pc = n_mux<REG_SIZE>(instr[29] & (condition + not(instr[30]) + instr[31]),jump,pc2);   (*on saute si on peut sauter et (ce n'est pas une branche ou la condition de la branche est remplie)*)
+    condition = instr[19]^((instr[17]&eq) + (instr[18]&inf));                              (*cas d'une branche : on combine funct3 avec les flags sortant de l'ALU*)
+    jump = n_mux<REG_SIZE>(instr[30],imm,alu_result);                                      (*si instr[1]=0, alu_input=imm et alu_result = rs1+imm lorsqu'on saute (car dans ce cas funct3 = funct7 = 0)*)
+    (rs1, rs2) = reg_file<LOG_REG_NUM,1> (instr[23..25],instr[20..22],instr[26..28],w_en,result);
+    print_en = w_en & is_null<3>(instr[26..28]);
+    w_en = instr[31] + not(instr[30]+instr[29]);                                           (*les opcodes qui écrivent dans rd*)
+    alu_input = n_mux<REG_SIZE>(instr[30] & (instr[29]+instr[31]),rs2,imm);
+    (alu_result,eq,inf) = alu<REG_SIZE>(rs1,alu_input,instr[17..19],instr[16]);
+    load = ram<REG_SIZE, REG_SIZE>(alu_result, not(instr[29]) & instr[30] & not(instr[31]) , alu_result,rs2);
+    result = n_mux<REG_SIZE>(instr[31],result2,load);                                      (*Branche FAUX de ce mux utile uniquement dans le cas opcode=000, puisque sinon write_en=0.*)
+    result2 = n_mux<REG_SIZE>(instr[29],pc2,alu_result);                                   (*Ce résultat sert si instr[2]=1. Si de plus instr[0]=1, c'est un jump and link, sinon c'est un résultat d'ALU*)
+end where

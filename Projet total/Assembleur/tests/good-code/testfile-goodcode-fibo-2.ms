@@ -18,5 +18,4 @@
     
 .print:
     print %rax
-    jump %rfx
- 
+    jmp %rfx

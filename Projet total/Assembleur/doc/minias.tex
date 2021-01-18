@@ -34,7 +34,7 @@ y:
 \end{lstlisting}
 
     \section{Registres}
-    Il y a 7 registres minias nommés rax, rbx, rcx, rdx, rex, rfx, rhx.\\
+    Il y a 7 registres minias nommés rax, rbx, rcx, rdx, rex, rfx, rgx.\\
     Ces registres sont sur 16 bits.\\
     Le registre ISA rz n'est pas accessible au programmeur.
 
@@ -92,13 +92,6 @@ y:
             \item \texttt{rsave} : registre
         \end{itemize}
         Sauvegarde PC+4 dans \texttt{rsave}, puis jump vers \texttt{addr}.
-
-        \item print :\\
-        \texttt{print source}
-        \begin{itemize}
-            \item \texttt{source} : registre
-        \end{itemize}
-        Affiche le contenu de \texttt{source} en l'interprétant comme un code ASCII.
     \end{itemize}
 
     \section{Labels}
