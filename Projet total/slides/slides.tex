@@ -1,0 +1,179 @@
+\documentclass[xcolor=pst,10pt,onlymath]{beamer}
+
+\usefonttheme{serif}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=true]
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{footline}[frame number]{} 
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{section in toc}[ball unnumbered]
+\usecolortheme{beaver}
+\usecolortheme{rose}
+
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{eurosym}
+\usepackage{longtable}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{fancyhdr}
+\usepackage{esvect,esint}
+\usepackage{xcolor}
+\usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+
+
+
+\author{Pierre-Alexandre Bazin, Mathis Bouverot \& Arthur Rousseau}
+\title{Projet Systèmes numériques}
+\date{19 janvier 2021}
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\Large
+\begin{frame}
+    \frametitle{ISA - Mémoire}
+    Tous les entiers manipulés sont signés et sur 16 bits.\\
+    La RAM a des adresses sur 16 bits, et ses mots sont de longueur 16 bits.
+    L'entièreté des $2^{16}$ mots de la RAM sont adressables. 
+    Une partie de la RAM est réservée aux entrées et sorties du processeur.
+    \begin{center}
+    \begin{tabular}{|c|c|}
+        \hline
+        \texttt{adresse de début} & \texttt{fonction} \\
+        \hline
+        $0$ & aucune \\
+        \hline
+        $2^{16}-16$ & sorties \\
+        \hline    
+        $2^{16}-8$ & entrées \\
+        \hline
+    \end{tabular}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{ISA - Registres}
+    Il y a 8 registres nommés rax, rbx, rcx, rdx, rex, rfx, rgx, rz (registre nul).
+    Ces registres sont sur 16 bits. 
+    Codage des registres :
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        rz  & rax & rbx & rcx & rdx & rex & rfx & rgx \\
+        \hline
+        000 & 001 & 010 & 011 & 100 & 101 & 110 & 111 \\
+        \hline  
+    \end{tabular}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{ISA - Instructions}
+    Les instructions sont sur 32 bits. Leur schéma est le suivant :
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        \texttt{imm} & \texttt{funct7} & \texttt{funct3} & \texttt{rs2} & \texttt{rs1} & \texttt{rd} & \texttt{opcode} \\
+        \hline
+    \end{tabular}
+    \end{center}
+    avec \begin{itemize}
+        \item \texttt{opcode} sur 3 bits
+        \item \texttt{funct3} sur 3 bits
+        \item \texttt{funct7} sur 1 bit 
+        \item \texttt{rd}, \texttt{rs2}, \texttt{rs1} sur 3 bits
+        \item \texttt{imm} sur 16 bits
+    \end{itemize}
+\end{frame}
+
+
+\footnotesize
+\begin{frame}
+    \frametitle{ISA - Instructions}
+    \begin{longtable}{|l|l|c|c|c|l|}
+        \hline
+        Inst           & Nom                             & Opcode & funct3 & funct7 & Description                   \\
+        \hline
+        \texttt{add}   & ADD                             & 011    & 000    & 0      & \texttt{rd = rs1 + rs2}       \\
+        \texttt{sub}   & SUB                             & 011    & 000    & 1      & \texttt{rd = rs1 - rs2}       \\
+        \texttt{or}    & OR                              & 011    & 100    & 0      & \texttt{rd = rs1 or rs2}      \\
+        \texttt{nand}  & NAND                            & 011    & 100    & 1      & \texttt{rd = rs1 nand rs2}    \\
+        \texttt{xor}   & XOR                             & 011    & 001    & 0      & \texttt{rd = rs1 xor rs2}     \\
+        \texttt{nxor}  & NXOR                            & 011    & 001    & 1      & \texttt{rd = rs1 nxor rs2}    \\
+        \texttt{and}   & AND                             & 011    & 101    & 0      & \texttt{rd = (rs1 and rs2)}   \\
+        \texttt{nor}   & NOR                             & 011    & 101    & 1      & \texttt{rd = rs1 nor rs2}     \\
+        \texttt{sll}   & Shift left logical              & 011    & 011    & 0      & \texttt{rd = rs1 << rs2}      \\
+        \texttt{srl}   & Shift right logical             & 011    & 010    & 0      & \texttt{rd = rs1 >> rs2}      \\
+        \texttt{sra}   & Shift right Arith               & 011    & 010    & 1      & \texttt{rd = rs1 >> rs2}      \\
+        \texttt{seq}   & Set equal                       & 011    & 111    & 1      & \texttt{rd = (rs1 = rs2)?1:0} \\
+        \texttt{slt}   & Set less than                   & 011    & 110    & 1      & \texttt{rd = (rs1 < rs2)?1:0} \\
+        \hline
+    \end{longtable}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{ISA - Instructions}
+    Immediate
+    \begin{longtable}{|l|l|c|c|c|l|}
+        \hline
+        Inst           & Nom                             & Opcode & funct3 & funct7 & Description                   \\
+        \hline
+        \texttt{addi}  & ADD                  & 001    & 000    & 0      & \texttt{rd = rs1 + imm}       \\
+        \texttt{subi}  & SUB                  & 001    & 000    & 1      & \texttt{rd = rs1 - imm}       \\
+        \texttt{ori}   & OR                   & 001    & 100    & 0      & \texttt{rd = rs1 or imm}      \\
+        \texttt{nandi} & NAND                 & 001    & 100    & 1      & \texttt{rd = rs1 nand imm}    \\
+        \texttt{xori}  & XOR                  & 001    & 001    & 0      & \texttt{rd = rs1 xor imm}     \\
+        \texttt{nxori} & NXOR                 & 001    & 001    & 1      & \texttt{rd = rs1 nxor imm}    \\
+        \texttt{andi}  & AND                  & 001    & 101    & 0      & \texttt{rd = rs1 and imm}     \\
+        \texttt{nori}  & NOR                  & 001    & 101    & 1      & \texttt{rd = rs1 nor imm}     \\
+        \texttt{slli}  & Shift left logical   & 001    & 011    & 0      & \texttt{rd = rs1 << imm}      \\
+        \texttt{srli}  & Shift right logical  & 001    & 010    & 0      & \texttt{rd = rs1 >> imm}      \\
+        \texttt{srai}  & Shift right Arith    & 001    & 010    & 1      & \texttt{rd = rs1 >> imm}      \\
+        \texttt{seqi}  & Set equal            & 001    & 111    & 1      & \texttt{rd = (rs1 = imm)?1:0} \\
+        \texttt{slti}  & Set less than        & 001    & 110    & 1      & \texttt{rd = (rs1 < imm)?1:0} \\
+        \hline
+    \end{longtable}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{ISA - Instructions}
+    \begin{longtable}{|l|l|c|c|c|l|}
+        \hline
+        Inst           & Nom                             & Opcode & funct3 & funct7 & Description                   \\
+        \hline
+        \texttt{lw}    & Load word                       & 000    & 000    & 0      & \texttt{rd=M[rs1+imm]}        \\
+        \texttt{sw}    & Store word                      & 010    & 000    & 0      & \texttt{M[rs1+imm]=rs2}       \\
+        \hline
+        \texttt{beq}   & Branch ==                       & 110    & 100    & 1      & \texttt{if(rs1 == rs2) PC=imm}\\
+        \texttt{bne}   & Branch !=                       & 110    & 101    & 1      & \texttt{if(rs1 != rs2) PC=imm}\\
+        \texttt{ble}   & Branch \(\leqslant\)            & 110    & 110    & 1      & \texttt{if(rs1 <= rs2) PC=imm}\\
+        \texttt{blt}   & Branch <                        & 110    & 010    & 1      & \texttt{if(rs1 < rs2) PC=imm} \\
+        \texttt{bge}   & Branch \(\geqslant\)            & 110    & 011    & 1      & \texttt{if(rs1 >= rs2) PC=imm}\\
+        \texttt{bgt}   & Branch >                        & 110    & 111    & 1      & \texttt{if(rs1 > rs2) PC=imm} \\
+        \hline
+        \texttt{jal}   & Jump and link                   & 111    & 000    & 0      &\texttt{rd=PC+4; PC=imm}       \\
+        \texttt{jalr}  & Jump and link reg               & 101    & 000    & 0      &\texttt{rd=PC+4; PC=rs1+imm}   \\
+        \texttt{jr}    & Jump reg                        & 100    & 000    & 0      &\texttt{PC=rs1+imm}            \\
+        \texttt{jmp}   & Jump                            & 110    & 001    & 1      &\texttt{PC=imm}                \\
+        \hline
+    \end{longtable}
+\end{frame}
+
+
+\Large
+\begin{frame}
+    \frametitle{ISA - Instructions}
+    On ajoute du sucre syntaxique au niveau de l'assembleur : certaines instructions ISA sont regroupées en une seule instruction assembleur (exemple : \texttt{mov} correspond aux instructions ISA \texttt{lw}, \texttt{addi}, \texttt{sw} entre autres).
+\end{frame}
+
+
+
+\end{document}
