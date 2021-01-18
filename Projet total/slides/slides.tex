@@ -20,6 +20,7 @@
 \usepackage{esvect,esint}
 \usepackage{xcolor}
 \usepackage{tikz,circuitikz}\usetikzlibrary{calc}
+\usepackage{listings}
 
 
 
@@ -174,6 +175,43 @@
     On ajoute du sucre syntaxique au niveau de l'assembleur : certaines instructions ISA sont regroupées en une seule instruction assembleur (exemple : \texttt{mov} correspond aux instructions ISA \texttt{lw}, \texttt{addi}, \texttt{sw} entre autres).
 \end{frame}
 
+
+\begin{frame}[fragile]
+    \frametitle{Assembleur - Exemple}
+    Syntaxe proche de x86-64 :
+    \begin{center}
+    \begin{lstlisting}
+    ; Exemple de programme minias
+        .section text
+    L1:
+        add %rax %rbx 42
+        mov x %rax
+        jmp L1
+        .section data
+    x:  
+        .space 2
+    y:
+    \end{lstlisting}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Assembleur - Instructions}
+    Les instructions assembleur sont plus 'haut niveau' :
+    \begin{itemize}
+        \item Pas de distinction entre add/addi, sub/subi, etc.
+        \item Une seule instruction \texttt{mov} pour toutes les copies.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Assembleur - Labels}
+    Il y a des labels pour éviter de manipuler directement des adresses ROM/RAM.
+    \begin{itemize}
+        \item Dans la section text : permet de faire des jump.
+        \item Dans la section data : permet d'accéder à la RAM avec l'instruction \texttt{mov}.
+    \end{itemize}
+\end{frame}
 
 
 \end{document}

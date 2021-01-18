@@ -92,11 +92,27 @@ y:
             \item \texttt{rsave} : registre
         \end{itemize}
         Sauvegarde PC+4 dans \texttt{rsave}, puis jump vers \texttt{addr}.
+
+        \item .space :\\
+        \texttt{.space n}
+        \begin{itemize}
+            \item \texttt{n} : entier
+        \end{itemize}
+        Peut se trouver uniquement dans la section data. Permet de 'sauter' des adresses. 
+        Exemple :
+\begin{lstlisting}
+    .section data
+    .space 2
+x:  
+\end{lstlisting}
+    Ici \texttt{x} est à l'adresse $2$ dans la RAM.
+        
     \end{itemize}
 
     \section{Labels}
     Un label est une chaine de caractères comprenant des chiffres, 
     des underscores, des points et au moins une lettre (minuscule ou majuscule).\\
-    Un label peut apparaitre avant une instruction suivi de deux points.
+    Un label peut apparaitre avant une instruction dans la section text,
+    ou n'importe où dans la section data, et est suivi de deux points.
 
 \end{document}

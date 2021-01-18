@@ -1,0 +1,16 @@
+\frametitle{Assembleur - Exemple}
+    Syntaxe proche de x86-64 :
+    \begin{center}
+    \begin{lstlisting}
+    ; Exemple de programme minias
+        .section text
+    L1:
+        add %rax %rbx 42
+        mov x %rax
+        jmp L1
+        .section data
+    x:
+        .space 2
+    y:
+    \end{lstlisting}
+    \end{center}
