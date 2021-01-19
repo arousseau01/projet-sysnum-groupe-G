@@ -13,4 +13,4 @@ Structure des dossiers :
 
 /Processeur : code minijazz du processeur 
 
-/SimulateurPABazin : code du simulateur de netlist (et un readme expliquant comment l'utiliser)
+/SimulateurPABazin : code du simulateur de netlist 
