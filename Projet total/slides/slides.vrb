@@ -1,5 +1,4 @@
 \frametitle{Assembleur - Exemple}
-    Syntaxe proche de x86-64 :
     \begin{center}
     \begin{lstlisting}
     ; Exemple de programme minias
