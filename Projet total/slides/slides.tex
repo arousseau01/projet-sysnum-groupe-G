@@ -197,7 +197,7 @@
     \frametitle{Processeur - circuit principal}
     1 registre supplémentaire pc indiquant la tête de lecture dans la ROM; il est incrémenté à chaque parcours de la netlist \\
     on ne peut pas y accéder directement comme les autres registres; on peut cependant le modifier via les instructions binaires jump \\
-    après avoir lu la rom, le circuit principal utilise reg_file et l'ALU pour effectuer l'opération
+    après avoir lu la rom, le circuit principal utilise reg_file et l'ALU pour effectuer l'opération \\
     les bits de l'opcode donnent directement des informations sur le type d'instruction, ce qui évite d'utiliser un mux 8 entrées
     \begin{itemize}
         \item par exemple le bit de poids fort dit si l'instruction commade un jump
