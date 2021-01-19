@@ -173,7 +173,7 @@
     \frametitle{Processeur}
     3 composants principaux :
     \begin{itemize}
-        \item reg_file - gestion des registres assembleur
+        \item reg\_file - gestion des registres assembleur
         \item alu - l'ALU
         \item main - lit les instructions binaires dans la ROM et les exécute
     \end{itemize}
@@ -181,7 +181,7 @@
 
 \begin{frame}
     \frametitle{Processeur - registres assembleur}
-    le composant reg_file permet de lire dans 2 registres et d'écrire dans un troisième \\
+    le composant reg\_file permet de lire dans 2 registres et d'écrire dans un troisième \\
     7 registres; le registre rz est remplacé par une constante nulle dans la netlist; 
         écrire dedans ne fait donc rien
 \end{frame}
@@ -197,7 +197,7 @@
     \frametitle{Processeur - circuit principal}
     1 registre supplémentaire pc indiquant la tête de lecture dans la ROM; il est incrémenté à chaque parcours de la netlist \\
     on ne peut pas y accéder directement comme les autres registres; on peut cependant le modifier via les instructions binaires jump \\
-    après avoir lu la rom, le circuit principal utilise reg_file et l'ALU pour effectuer l'opération \\
+    après avoir lu la rom, le circuit principal utilise reg\_file et l'ALU pour effectuer l'opération \\
     les bits de l'opcode donnent directement des informations sur le type d'instruction, ce qui évite d'utiliser un mux 8 entrées
     \begin{itemize}
         \item par exemple le bit de poids fort dit si l'instruction commade un jump
@@ -208,9 +208,9 @@
     \frametitle{Processeur - sortie}
     L'écriture dans rz ne faisant rien, on l'utilise pour la sortie (en plus des adresses RAM de sortie)
     \begin{itemize}
-        \item le processeur renvoie print_en : 1 si on essaie d'écrire dans rz et print_data : ce qu'on a assayé d'écrire dans rz
-        \item le simulateur peut ensuite utiliser print_en et print_data
-        \item par exemple, clock_simulator actualise l'horlogelorsque print_en = 1
+        \item le processeur renvoie print\_en : 1 si on essaie d'écrire dans rz et print\_data : ce qu'on a assayé d'écrire dans rz
+        \item le simulateur peut ensuite utiliser print\_en et print\_data
+        \item par exemple, clock\_simulator actualise l'horloge lorsque print\_en = 1
     \end{itemize}
 \end{frame}
 
